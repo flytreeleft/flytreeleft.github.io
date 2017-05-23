@@ -4,8 +4,8 @@ git pull origin master
 git reset --hard origin/master
 git clean -d -f
 
-repo=`git remote get-url origin`
-branch=blog
+repo='git@github.com:flytreeleft/blog.git'
+branch=master
 if [ ! -d blog ]; then
     echo "No blog found yet, clone a new copy from $repo."
     git clone $repo -b $branch blog
