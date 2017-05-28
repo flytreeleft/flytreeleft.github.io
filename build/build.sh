@@ -25,6 +25,7 @@ cp -r blog/dist/* .
 
 echo "Commit new dist files."
 git add *
+git add -A
 git commit -m "Site updated"
 
 echo "Push dist files to repository."
