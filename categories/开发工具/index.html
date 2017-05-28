@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    
+    <title>Category: 开发工具 | flytreeleft&#39;s Blog</title>
+    <meta name="description" content=""/>
+    <meta name="keywords" content="IT,KISS"/>
+    <meta name="HandheldFriendly" content="True"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="shortcut icon" href="/assets/profile/favicon.png">
+    <link rel="alternate" href="/atom.xml" title="flytreeleft's Blog">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="IT,KISS">
+<meta property="og:type" content="website">
+<meta property="og:title" content="flytreeleft&#39;s Blog">
+<meta property="og:url" content="https://flytreeleft.github.io/categories/开发工具/index.html">
+<meta property="og:site_name" content="flytreeleft&#39;s Blog">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="flytreeleft&#39;s Blog">
+
+    <link rel="stylesheet" href="/google-fonts.css">
+    <link rel="stylesheet" href="/waves.min.css">
+    <link rel="stylesheet" href="/style.css">
+    <script>
+        function setLoadingBarProgress(num) {
+            document.getElementById('loading-bar').style.width = num + "%";
+        }
+    </script>
+</head>
+
+<body>
+  <div id="loading-bar-wrapper">
+  <div id="loading-bar"></div>
+</div>
+
+
+  <script>setLoadingBarProgress(20)</script> 
+  <header class="l_header">
+	<div class='wrapper'>
+		<div class="nav-main container container--flex">
+			<a class="logo flat-box" href='/' >
+				flytreeleft's Blog
+			</a>
+			<div class='menu'>
+				<ul class='h-list'>
+					
+						<li>
+							<a class='flat-box nav-home' href='/'>
+								Home
+							</a>
+						</li>
+					
+						<li>
+							<a class='flat-box nav-archives' href='/archives'>
+								Archives
+							</a>
+						</li>
+					
+						<li>
+							<a class='flat-box nav-about' href='/about'>
+								About
+							</a>
+						</li>
+					
+				</ul>
+				<div class='underline'></div>
+			</div>
+			
+				<div class="m_search">
+					<form name="searchform" class="form u-search-form">
+						<input type="text" class="input u-search-input" placeholder="Search" />
+						<span class="icon icon-search"></span>
+					</form>
+				</div>
+			
+			<ul class='switcher h-list'>
+				
+					<li class='s-search'><a href='javascript:void(0)'><span class="icon icon-search flat-box"></span></a></li>
+				
+				<li class='s-menu'><a href='javascript:void(0)'><span class="icon icon-menu flat-box"></span></a></li>
+			</ul>
+		</div>
+		
+		<div class='nav-sub container container--flex'>
+			<a class="logo" class="flat-box" href='javascript:void(0)'>
+				Word of Forks
+			</a>
+
+			<ul class='switcher h-list'>
+				<li class='s-comment'><a href='javascript:void(0)'><span class="icon icon-chat_bubble_outline flat-box"></span></a></li>
+				<li class='s-top'><a href='javascript:void(0)'><span class="icon icon-arrow_upward flat-box"></span></a></li>
+				<li class='s-toc'><a href='javascript:void(0)'><span class="icon icon-format_list_numbered flat-box"></span></a></li>
+			</ul>
+		</div>
+	</div>
+</header>
+<aside class="menu-phone">
+	<nav>
+		
+			<a href="/" class="nav-home nav">
+				Home
+			</a>
+		
+			<a href="/archives" class="nav-archives nav">
+				Archives
+			</a>
+		
+			<a href="/about" class="nav-about nav">
+				About
+			</a>
+		
+	</nav>
+</aside>
+
+    <script>setLoadingBarProgress(40);</script>
+  <div class="l_body">
+    <div class='container clearfix'>
+      <div class='l_main'>
+        
+  <script>
+    window.subData= { title:'Category : 开发工具'}
+  </script>
+
+<section class="post-list">
+	
+    <div class='post-wrapper'>
+      <article class="post reveal">
+  <section class="meta">
+    
+    <h2 class="title">
+      <a href="/git-usage-cases/">
+        Git使用案例
+      </a>
+    </h2>
+    
+    <time>
+      5月 28, 2017
+    </time>
+		
+    
+    <div class='cats'>
+        <a href="/categories/开发工具/">开发工具</a>
+    </div>
+
+  </section>
+  <section class="article typo">
+	  <h2 id="拆分子目录到新仓库"><a href="#拆分子目录到新仓库" class="headerlink" title="拆分子目录到新仓库"></a>拆分子目录到新仓库</h2><h3 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h3><p>通常为便于项目开发和调试，开发前期会将多个组件放在同一仓库中，而当各个组件的功能结构和代码逐渐区域稳定后，<br>便需要将其拆分出来进行独立开发和管理，以便于与其他项目共享组件。</p>
+<p>此时，不仅需要将组件所在目录内的代码全部拆分到单独的仓库，同时，还需要确保历史记录能够完整保留。</p>
+<h3 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Clone the repository that contains the subfolder.</span></div><div class="line">git <span class="built_in">clone</span> https://github.com/USERNAME/REPOSITORY-NAME</div><div class="line"><span class="built_in">cd</span> REPOSITORY-NAME</div><div class="line"><span class="comment"># To filter out the subfolder from the rest of the files in the repository</span></div><div class="line"><span class="comment">## FOLDER-NAME: The folder within your project that you'd like to create a separate repository from.</span></div><div class="line"><span class="comment">## BRANCH-NAME: The default branch for your current project, for example, 'master' or 'gh-pages'</span></div><div class="line">git filter-branch --prune-empty --subdirectory-filter FOLDER-NAME BRANCH-NAME</div><div class="line"><span class="comment"># Change the existing remote 'origin' (or other name) URL to the new repository URL</span></div><div class="line">git remote <span class="built_in">set</span>-url origin https://github.com/USERNAME/NEW-REPOSITORY-NAME.git</div><div class="line"><span class="comment"># [Optional] Change BRANCH-NAME to the default branch (e.g. 'master') of the new repository</span></div><div class="line">git branch -m BRANCH-NAME master</div><div class="line"><span class="comment"># Push your changes to the new repository</span></div><div class="line">git push -u origin master</div></pre></td></tr></table></figure>
+<p><strong>注意</strong>：</p>
+<ul>
+<li>在第二步操作后，当前目录将会只剩下子目录中的文件</li>
+<li>最好在新的目录中进行上述操作：可以直接clone，也可以从复制已有项目到其他目录</li>
+</ul>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ul>
+<li><a href="https://help.github.com/articles/splitting-a-subfolder-out-into-a-new-repository/" target="_blank" rel="external">Splitting a subfolder out into a new repository</a></li>
+</ul>
+<h2 id="修改变更提交人的信息"><a href="#修改变更提交人的信息" class="headerlink" title="修改变更提交人的信息"></a>修改变更提交人的信息</h2><h3 id="场景-1"><a href="#场景-1" class="headerlink" title="场景"></a>场景</h3><p>基于项目长远发展考虑，将某个具有实用价值且吸引力极大的项目开源，<br>需要将项目从公司内部仓库开放到Github上，但相关开发人员在两个系统中所用帐号不一致，<br>为了便于issue交流以及PR提交，这时，需要更改历史中的提交人信息。</p>
+<p>其实，大多数时候，很可能是要弃用内部仓库并将工作全部移到公共仓库时才有这么做的需求，其余情况并不需要这么做。</p>
+<h3 id="操作-1"><a href="#操作-1" class="headerlink" title="操作"></a>操作</h3><ul>
+<li><p>部分替换：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">git filter-branch --commit-filter \</div><div class="line">        <span class="string">'if [ "$GIT_AUTHOR_NAME" = "OldAuthor Name" ]; then \</span></div><div class="line">             export GIT_AUTHOR_NAME="Author Name"; \</div><div class="line">             export GIT_AUTHOR_EMAIL=authorEmail@example.com; \</div><div class="line">             export GIT_COMMITTER_NAME="Commmiter Name"; \</div><div class="line">             export GIT_COMMITTER_EMAIL=commiterEmail@example.com; \</div><div class="line">         fi; \</div><div class="line">         git commit-tree "$@" '</div><div class="line"><span class="comment"># Push 'master' to the existing repository</span></div><div class="line">git push --force origin master</div></pre></td></tr></table></figure>
+</li>
+<li><p>全部替换：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">git filter-branch --commit-filter \</div><div class="line">        <span class="string">'export GIT_AUTHOR_NAME="Author Name"; \</span></div><div class="line">         export GIT_AUTHOR_EMAIL=authorEmail@example.com; \</div><div class="line">         export GIT_COMMITTER_NAME="Commmiter Name"; \</div><div class="line">         export GIT_COMMITTER_EMAIL=commiterEmail@example.com; \</div><div class="line">         git commit-tree "$@" '</div><div class="line"><span class="comment"># Push 'master' to the existing repository</span></div><div class="line">git push --force origin master</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><strong>注意</strong>：</p>
+<ul>
+<li>若出现类似<code>Cannot create a new backup. A previous backup already exists in refs/original/. Force overwriting the backup with -f</code>的异常提示，则需要在<code>filter-branch</code>命令中添加选项<code>-f</code>，即<code>git filter-branch -f</code>，以强制进行修改</li>
+<li>如果提交的分支是受保护的，则在提交时会出现<code>remote: GitLab: You are not allowed to force push code to a protected branch on this project.</code>的错误信息，此时，需要调整仓库设置，临时取消对目标分支的保护</li>
+</ul>
+<h3 id="参考-1"><a href="#参考-1" class="headerlink" title="参考"></a>参考</h3><ul>
+<li><a href="https://stackoverflow.com/questions/4493936/could-i-change-my-name-and-surname-in-all-previous-commits" target="_blank" rel="external">Could I change my name and surname in all previous commits?</a></li>
+</ul>
+<h2 id="迁移子分支至新仓库"><a href="#迁移子分支至新仓库" class="headerlink" title="迁移子分支至新仓库"></a>迁移子分支至新仓库</h2><h3 id="场景-2"><a href="#场景-2" class="headerlink" title="场景"></a>场景</h3><p>某个项目仓库中可能存在多个功能特性（features）分支，在一段时候后，基于产品功能规划和开发维护等方面的考虑，<br>需要将某些特性分支独立成新的项目或子项目，将其迁移到新的仓库中。</p>
+<h3 id="操作-2"><a href="#操作-2" class="headerlink" title="操作"></a>操作</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Push 'feature-branch' to the branch 'master' (or others) of new repository</span></div><div class="line">git push url://to/new/repository.git feature-branch:master</div><div class="line"><span class="comment"># [Optional] Delete the 'feature-branch' from current repository</span></div><div class="line">git branch <span class="_">-d</span> feature-branch</div><div class="line"><span class="comment"># Clone codes from new repository</span></div><div class="line">git <span class="built_in">clone</span> url://to/new/repository.git feature-branch</div></pre></td></tr></table></figure>
+<h3 id="参考-2"><a href="#参考-2" class="headerlink" title="参考"></a>参考</h3><ul>
+<li><a href="https://stackoverflow.com/questions/2227062/how-do-i-move-a-git-branch-out-into-its-own-repository" target="_blank" rel="external">How do I move a Git branch out into its own repository?</a></li>
+</ul>
+
+
+    
+    
+    
+	  <div class="full-width auto-padding tags">
+      
+        <a href="/tags/git/">git</a>
+      
+	  </div>
+    
+  </section>
+</article>
+    </div>
+  
+</section>
+
+
+      </div>
+      <aside class='l_side'>
+        
+  <section class='m_widget about'>
+
+<img class='avatar waves-image' src='/assets/profile/avatar.jpg' />
+
+<div class='header'>flytreeleft</div>
+<div class='content'>
+
+
+<div class='desc'>Keep it simple, stupid!</div>
+
+</div>
+</section>
+
+  <section class='m_widget links'>
+<div class='header'>Links</div>
+<div class='content'>
+    <ul class="entry">
+    
+        <li><a class="flat-box" target="_blank" href="http://www.oschina.net/">
+            <div class='name'>开源中国</div>
+        </a></li>
+    
+        <li><a class="flat-box" target="_blank" href="http://coolshell.cn/">
+            <div class='name'>酷壳</div>
+        </a></li>
+    
+        <li><a class="flat-box" target="_blank" href="http://www.infoq.com/">
+            <div class='name'>InfoQ</div>
+        </a></li>
+    
+    </ul>
+</div>
+</section>
+
+  <section class='m_widget categories'>
+<div class='header'>Categories</div>
+<div class='content'>
+    
+    <ul class="entry">
+    
+        <li><a class="flat-box" href="/categories/开发工具/"><div class='name'>开发工具</div><div class='badget'>1</div></a></li>
+    
+    </ul>
+    
+</div>
+</section>
+
+  
+<div class="m_widget tagcloud">
+    <div class="header">Tags</div>
+    <div class='content'>
+        <a href="/tags/git/" style="font-size: 14px; color: #808080">git</a>
+    </div>
+</div>
+
+
+
+      </aside>
+      <script>setLoadingBarProgress(60);</script>
+    </div>
+  </div>
+  <footer id="footer" class="clearfix">
+
+	<div class="social-wrapper">
+  	
+      
+        <a href="https://github.com/flytreeleft" class="social github"
+          target="_blank" rel="external">
+          <span class="icon icon-github"></span>
+        </a>
+      
+        <a href="https://twitter.com/flytreeleft" class="social twitter"
+          target="_blank" rel="external">
+          <span class="icon icon-twitter"></span>
+        </a>
+      
+    
+  </div>
+  
+  <div>Theme <a href='https://github.com/stkevintan/hexo-theme-material-flow' class="codename">MaterialFlow</a> designed by <a href="http://keyin.me/" target="_blank">Kevin Tan</a>.</div>
+  
+</footer>
+
+
+  <script>setLoadingBarProgress(80);</script>
+  
+<script>
+    var disqus_shortname = 'flytreeleft-blog';
+    
+    (function () {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//'
+                  + disqus_shortname
+                  + '.disqus.com/count.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/waves.min.js"></script>
+<script src="/js/scrollreveal.min.js"></script>
+<script src="/js/jquery.fitvids.js"></script>
+<script>
+    var GOOGLE_CUSTOM_SEARCH_API_KEY = "";
+    var GOOGLE_CUSTOM_SEARCH_ENGINE_ID = "";
+    var ALGOLIA_API_KEY = "";
+    var ALGOLIA_APP_ID = "";
+    var ALGOLIA_INDEX_NAME = "";
+    var AZURE_SERVICE_NAME = "";
+    var AZURE_INDEX_NAME = "";
+    var AZURE_QUERY_KEY = "";
+    var BAIDU_API_ID = "";
+    var SEARCH_SERVICE = "hexo";
+    var ROOT = "/" || "/";
+    if (!ROOT.endsWith('/')) {
+        ROOT += '/';
+    }
+</script>
+<script src="/js/search.js"></script>
+<script src="/js/app.js"></script>
+<script src="/js/donate.js"></script>
+
+
+  <script>setLoadingBarProgress(100);</script>
+</body>
+</html>
