@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://flytreeleft.github.io/"/>
-  <updated>2017-05-28T13:33:29.306Z</updated>
+  <updated>2017-05-28T16:13:19.871Z</updated>
   <id>https://flytreeleft.github.io/</id>
   
   <author>
@@ -14,6 +14,26 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Git使用案例</title>
+    <link href="https://flytreeleft.github.io/git-usage-cases/"/>
+    <id>https://flytreeleft.github.io/git-usage-cases/</id>
+    <published>2017-05-28T14:24:15.000Z</published>
+    <updated>2017-05-28T16:13:19.871Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;拆分子目录到新仓库&quot;&gt;&lt;a href=&quot;#拆分子目录到新仓库&quot; class=&quot;headerlink&quot; title=&quot;拆分子目录到新仓库&quot;&gt;&lt;/a&gt;拆分子目录到新仓库&lt;/h2&gt;&lt;h3 id=&quot;场景&quot;&gt;&lt;a href=&quot;#场景&quot; class=&quot;headerlink&quot; 
+    
+    </summary>
+    
+      <category term="开发工具" scheme="https://flytreeleft.github.io/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/"/>
+    
+    
+      <category term="git" scheme="https://flytreeleft.github.io/tags/git/"/>
+    
+  </entry>
   
   <entry>
     <title>Hello world!</title>
