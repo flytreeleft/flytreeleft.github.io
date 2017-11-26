@@ -17,7 +17,7 @@ git pull origin $branch
 git reset --hard origin/$branch
 
 echo "Building blog ..."
-npm install && npm run clean && npm run build
+yarn install && npm run clean && npm run build
 popd
 
 echo "Copying blog dist files ..."
