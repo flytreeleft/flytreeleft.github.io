@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://flytreeleft.github.io/"/>
-  <updated>2017-05-29T03:18:14.754Z</updated>
+  <updated>2017-05-20T14:39:13.944Z</updated>
   <id>https://flytreeleft.github.io/</id>
   
   <author>
@@ -16,32 +16,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Git使用案例</title>
-    <link href="https://flytreeleft.github.io/git-usage-cases/"/>
-    <id>https://flytreeleft.github.io/git-usage-cases/</id>
-    <published>2017-05-28T14:24:15.000Z</published>
-    <updated>2017-05-29T03:18:14.754Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;拆分子目录到新仓库&quot;&gt;&lt;a href=&quot;#拆分子目录到新仓库&quot; class=&quot;headerlink&quot; title=&quot;拆分子目录到新仓库&quot;&gt;&lt;/a&gt;拆分子目录到新仓库&lt;/h2&gt;&lt;h3 id=&quot;场景&quot;&gt;&lt;a href=&quot;#场景&quot; class=&quot;headerlink&quot; title=&quot;场景&quot;&gt;&lt;/a&gt;场景&lt;/h3&gt;&lt;p&gt;通常为便于项目开发和调试，开发前期会将多个组件放在同一仓库中，而当各个组件的功能结构和代码逐渐区域稳定后，&lt;br&gt;便需要将其拆分出来进行独立开发和管理，以便于与其他项目共享组件。&lt;/p&gt;
-&lt;p&gt;此时，不仅需要将组件所在目录内的代码全部拆分到单独的仓库，同时，还需要确保历史记录能够完整保留。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="开发工具" scheme="https://flytreeleft.github.io/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/"/>
-    
-    
-      <category term="git" scheme="https://flytreeleft.github.io/tags/git/"/>
-    
-  </entry>
-  
-  <entry>
     <title>Hello world!</title>
     <link href="https://flytreeleft.github.io/hello-world/"/>
     <id>https://flytreeleft.github.io/hello-world/</id>
     <published>2017-05-14T10:44:19.000Z</published>
-    <updated>2017-05-28T13:33:29.306Z</updated>
+    <updated>2017-05-20T14:39:13.944Z</updated>
     
     <summary type="html">
     
