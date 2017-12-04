@@ -3,6 +3,24 @@
   
     
     <entry>
+      <title><![CDATA[作恶行为清单]]></title>
+      <url>/the-evil-behaviors/</url>
+      <content type="html"><![CDATA[<blockquote>
+<p>列举日常和网络中所发现的软件、应用、服务等的<u>作恶</u>行为，将其永久钉在<u>耻辱柱</u>上，有条件的或有候选方案的，应主动弃用之！<br>坚持开放、坚持自由。点击下载<a href="http://mirror.lihnidos.org/GNU/savannah/blug/fsfs-zh/fsfs-zh.pdf" target="_blank" rel="noopener">自由软件自由社会.pdf</a></p>
+</blockquote>
+<ul>
+<li><a href="https://2.taobao.com/" target="_blank" rel="noopener">闲鱼</a>Web服务隐藏搜索框<ul>
+<li>事件： <a href="https://www.appinn.com/xianyu-search-box/" target="_blank" rel="noopener">https://www.appinn.com/xianyu-search-box/</a></li>
+<li>应对： <a href="https://github.com/hellopenggao/xianyu_search_box" target="_blank" rel="noopener">https://github.com/hellopenggao/xianyu_search_box</a></li>
+</ul>
+</li>
+</ul>
+]]></content>
+      
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[软件开发最佳实践]]></title>
       <url>/the-better-software-development-practice/</url>
       <content type="html"><![CDATA[<blockquote>
