@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://flytreeleft.github.io/"/>
-  <updated>2017-12-03T03:14:35.371Z</updated>
+  <updated>2017-12-04T07:41:11.093Z</updated>
   <id>https://flytreeleft.github.io/</id>
   
   <author>
@@ -17,16 +17,89 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>软件开发最佳实践</title>
+    <link href="https://flytreeleft.github.io/the-better-software-development-practice/"/>
+    <id>https://flytreeleft.github.io/the-better-software-development-practice/</id>
+    <published>2017-12-04T07:32:07.000Z</published>
+    <updated>2017-12-04T07:41:11.093Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;blockquote&gt;
+&lt;p&gt;The post isn’t finished yet, it will be updated anytime!&lt;/p&gt;
+&lt;/blockquote&gt;
+
+      
+    
+    </summary>
+    
+      <category term="开发规范" scheme="https://flytreeleft.github.io/categories/%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>软件开发行为准则</title>
+    <link href="https://flytreeleft.github.io/the-software-development-criterion/"/>
+    <id>https://flytreeleft.github.io/the-software-development-criterion/</id>
+    <published>2017-12-04T05:06:31.000Z</published>
+    <updated>2017-12-04T07:36:41.033Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;blockquote&gt;
+&lt;p&gt;The post isn’t finished yet, it will be updated anytime!&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;不是仅用户确认后的数据才算是&lt;strong&gt;用户隐私&lt;/strong&gt;，任何与用
+      
+    
+    </summary>
+    
+      <category term="开发规范" scheme="https://flytreeleft.github.io/categories/%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83/"/>
+    
+      <category term="职业道德" scheme="https://flytreeleft.github.io/categories/%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83/%E8%81%8C%E4%B8%9A%E9%81%93%E5%BE%B7/"/>
+    
+    
+      <category term="隐私" scheme="https://flytreeleft.github.io/tags/%E9%9A%90%E7%A7%81/"/>
+    
+  </entry>
+  
+  <entry>
     <title>如何突破自己的瓶颈？</title>
     <link href="https://flytreeleft.github.io/how-to-break-out-of-your-limit/"/>
     <id>https://flytreeleft.github.io/how-to-break-out-of-your-limit/</id>
     <published>2017-12-03T03:13:03.000Z</published>
-    <updated>2017-12-03T03:14:35.371Z</updated>
+    <updated>2017-12-04T07:40:28.123Z</updated>
     
     <summary type="html">
     
+      
+      
+        &lt;blockquote&gt;
+&lt;p&gt;The post isn’t finished yet, it will be updated anytime!&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;以旁观者角度审视自己&lt;/li&gt;
+&lt;li&gt;理性看待他人的评论、观点和建议，保持就事
+      
+    
     </summary>
     
+      <category term="自我剖析" scheme="https://flytreeleft.github.io/categories/%E8%87%AA%E6%88%91%E5%89%96%E6%9E%90/"/>
+    
+      <category term="人性探索" scheme="https://flytreeleft.github.io/categories/%E8%87%AA%E6%88%91%E5%89%96%E6%9E%90/%E4%BA%BA%E6%80%A7%E6%8E%A2%E7%B4%A2/"/>
+    
+    
+      <category term="自我" scheme="https://flytreeleft.github.io/tags/%E8%87%AA%E6%88%91/"/>
+    
+      <category term="静心" scheme="https://flytreeleft.github.io/tags/%E9%9D%99%E5%BF%83/"/>
+    
+      <category term="优越感" scheme="https://flytreeleft.github.io/tags/%E4%BC%98%E8%B6%8A%E6%84%9F/"/>
     
   </entry>
   
