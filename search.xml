@@ -6,15 +6,14 @@
       <title><![CDATA[作恶行为清单]]></title>
       <url>/the-evil-behaviors/</url>
       <content type="html"><![CDATA[<blockquote>
-<p>列举日常和网络中所发现的软件、应用、服务等的<u>作恶</u>行为，将其永久钉在<u>耻辱柱</u>上，有条件的或有候选方案的，应主动弃用之！<br>坚持开放、坚持自由。点击下载<a href="http://mirror.lihnidos.org/GNU/savannah/blug/fsfs-zh/fsfs-zh.pdf" target="_blank" rel="noopener">自由软件自由社会.pdf</a></p>
+<p>列举日常和网络中所发现的软件、应用、服务等的「作恶」行为，将其永久钉在「耻辱柱」上。有条件的或有候选方案的，应主动弃用之！<br>坚持开放、坚持自由。点击下载<a href="http://mirror.lihnidos.org/GNU/savannah/blug/fsfs-zh/fsfs-zh.pdf" target="_blank" rel="noopener">自由软件自由社会.pdf</a></p>
 </blockquote>
-<ul>
-<li><a href="https://2.taobao.com/" target="_blank" rel="noopener">闲鱼</a>Web服务隐藏搜索框<ul>
-<li>事件： <a href="https://www.appinn.com/xianyu-search-box/" target="_blank" rel="noopener">https://www.appinn.com/xianyu-search-box/</a></li>
-<li>应对： <a href="https://github.com/hellopenggao/xianyu_search_box" target="_blank" rel="noopener">https://github.com/hellopenggao/xianyu_search_box</a></li>
+<h2 id="为逼迫用户使用客户端而阉割Web端的基本功能"><a href="#为逼迫用户使用客户端而阉割Web端的基本功能" class="headerlink" title="为逼迫用户使用客户端而阉割Web端的基本功能"></a>为逼迫用户使用客户端而阉割Web端的基本功能</h2><ul>
+<li>案例： <a href="https://2.taobao.com/" target="_blank" rel="noopener">闲鱼</a>Web端隐藏搜索框</li>
+<li>来源： <a href="https://www.appinn.com/xianyu-search-box/" target="_blank" rel="noopener">https://www.appinn.com/xianyu-search-box/</a></li>
+<li>评语： 若欲达KPI，必先「中二自宫」</li>
 </ul>
-</li>
-</ul>
+<p><img src="/assets/images/the-evil-behaviors/xianyu-hide-itself-search-form-of-web-client.png" alt="闲鱼Web端隐藏搜索框截图@2017-12-05"></p>
 ]]></content>
       
         
@@ -44,7 +43,7 @@
 <p>The post isn’t finished yet, it will be updated anytime!</p>
 </blockquote>
 <ul>
-<li>不是仅用户确认后的数据才算是<strong>用户隐私</strong>，任何与用户相关的数据都应该<em>默认</em>视为<strong>用户隐私</strong>，<u>不需要任何形式的确认</u>，<br>而只有经过用户确认和同意的数据方可用作其他用途，且前提必须是明确告知数据为何要做次用途，以及将被如何利用、涉及哪些风险等</li>
+<li>不是仅用户确认后的数据才算是「用户隐私」，任何与用户相关的数据都应该「默认」视为用户隐私，<u>不需要任何形式的确认</u>，<br>而只有经过用户确认和同意的数据方可用作其他用途，且前提必须是明确告知数据为何要做次用途，以及将被如何利用、涉及哪些风险等</li>
 </ul>
 ]]></content>
       
