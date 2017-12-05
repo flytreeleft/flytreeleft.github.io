@@ -11,7 +11,8 @@
 <h2 id="为逼迫用户使用客户端而阉割Web端的基本功能"><a href="#为逼迫用户使用客户端而阉割Web端的基本功能" class="headerlink" title="为逼迫用户使用客户端而阉割Web端的基本功能"></a>为逼迫用户使用客户端而阉割Web端的基本功能</h2><ul>
 <li>案例： <a href="https://2.taobao.com/" target="_blank" rel="noopener">闲鱼</a>Web端隐藏搜索框</li>
 <li>来源： <a href="https://www.appinn.com/xianyu-search-box/" target="_blank" rel="noopener">https://www.appinn.com/xianyu-search-box/</a></li>
-<li>评语： 若欲达KPI，必先「中二自宫」</li>
+<li>评语： 若欲达KPI，必先「中二自宫」<a id="more"></a>
+</li>
 </ul>
 <p><img src="/assets/images/the-evil-behaviors/xianyu-hide-itself-search-form-of-web-client.png" alt="闲鱼Web端隐藏搜索框截图@2017-12-05"></p>
 ]]></content>
@@ -25,6 +26,7 @@
       <content type="html"><![CDATA[<blockquote>
 <p>The post isn’t finished yet, it will be updated anytime!</p>
 </blockquote>
+<a id="more"></a>
 ]]></content>
       
         <categories>
@@ -43,7 +45,8 @@
 <p>The post isn’t finished yet, it will be updated anytime!</p>
 </blockquote>
 <ul>
-<li>不是仅用户确认后的数据才算是「用户隐私」，任何与用户相关的数据都应该「默认」视为用户隐私，<u>不需要任何形式的确认</u>，<br>而只有经过用户确认和同意的数据方可用作其他用途，且前提必须是明确告知数据为何要做次用途，以及将被如何利用、涉及哪些风险等</li>
+<li>不是仅用户确认后的数据才算是「用户隐私」，任何与用户相关的数据都应该「默认」视为用户隐私，<u>不需要任何形式的确认</u>，<br>而只有经过用户确认和同意的数据方可用作其他用途，且前提必须是明确告知数据为何要做次用途，以及将被如何利用、涉及哪些风险等<a id="more"></a>
+</li>
 </ul>
 ]]></content>
       
@@ -73,7 +76,7 @@
 <ul>
 <li>以旁观者角度审视自己</li>
 <li>理性看待他人的评论、观点和建议，保持就事论事的态度，切忌带有个人情绪，更不要被别人带着走（影响个人情绪、怀疑个人价值观等等）<ul>
-<li>若无法静心并保持客观，那就禁用评论，不与人争论，专注于自己的思考方向，但需多接触不同观点，及时调整，不可过于执念</li>
+<li>若无法静心并保持客观，那就禁用评论，不与人争论，专注于自己的思考方向，但需多接触不同观点，及时调整，不可过于执念<a id="more"></a></li>
 </ul>
 </li>
 <li>专注于探索自己的生活方式和方向，不羡慕别人的生活，先过好自己的<ul>
@@ -88,6 +91,8 @@
 <li>有些人就是人生路上的“小怪兽”，有些人是良师益友</li>
 </ul>
 </li>
+<li>随时准备两件事情，以避免当前事情完成后不知道该继续做什么的困境</li>
+<li>准备一份阅读书籍列表，在无所事事时，避免无目的的刷网页，转而看书会更加有益</li>
 </ul>
 ]]></content>
       
@@ -197,6 +202,7 @@
       <url>/hello-world/</url>
       <content type="html"><![CDATA[<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(<span class="string">"Hello world!"</span>);</span><br></pre></td></tr></table></figure>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alert(<span class="string">'Hello world!'</span>);</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">"Hello world!"</span></span><br></pre></td></tr></table></figure>
 ]]></content>
       
