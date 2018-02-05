@@ -343,7 +343,7 @@ footer {
   background-size: initial;
 }
 #site-info {
-  padding: 10rem 1rem;
+  padding: 6rem 1rem;
 }
 #site-title,
 #site-sub-title {
@@ -805,7 +805,7 @@ footer {
   cursor: pointer;
 }
 #top-container #post-info {
-  padding: 5rem 1rem;
+  padding: 3rem 1rem;
   width: 100%;
   color: #eee;
   text-align: center;

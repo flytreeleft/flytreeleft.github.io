@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://flytreeleft.github.io/"/>
-  <updated>2017-12-18T04:25:36.187Z</updated>
+  <updated>2018-02-05T14:34:26.871Z</updated>
   <id>https://flytreeleft.github.io/</id>
   
   <author>
@@ -17,11 +17,33 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Nginx特例场景配置</title>
+    <link href="https://flytreeleft.github.io/the-special-case-configuration-of-nginx/"/>
+    <id>https://flytreeleft.github.io/the-special-case-configuration-of-nginx/</id>
+    <published>2018-02-05T12:30:47.000Z</published>
+    <updated>2018-02-05T14:34:26.871Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;Nginx代理第三方http站点静态资源文件&quot;&gt;&lt;a href=&quot;#Nginx代理第三方http站点静态资源文件&quot; class=&quot;headerlink&quot; title=&quot;Nginx代理第三方http站点静态资源文件&quot;&gt;&lt;/a&gt;Nginx代理第三方http站点静态资源文件&lt;/h2&gt;&lt;p&gt;这几天为部门搭建好了Maven仓库，为了便于指导部门同事能够准确配置并启用私有仓库，然后就打算写一份使用说明文档。&lt;/p&gt;
+&lt;p&gt;我不太喜欢写Word，也好几年几乎没用过了，一般都是直接写在部门的&lt;a href=&quot;https://www.mediawiki.org/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Wiki&lt;/a&gt;系统上。不过，一份简单的文档写到Wiki上又不太方便查阅，于是找了找可以在单个HTML里写&lt;a href=&quot;https://en.wikipedia.org/wiki/Markdown&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Markdown&lt;/a&gt;并直接渲染展示的方案。&lt;/p&gt;
+&lt;p&gt;很快我就找到了&lt;a href=&quot;https://github.com/chaitin/strapdown-zeta&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Strapdown Zeta&lt;/a&gt;，其对Mardown的支持较为全面，并且使用很简单，还提供多套主题可自由切换。需要提到的是该库为&lt;a href=&quot;https://github.com/arturadib/strapdown&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Strapdown&lt;/a&gt;的衍生与改进版本，而&lt;code&gt;Strapdown&lt;/code&gt;已经很长时间未更新了，选择&lt;code&gt;Strapdown Zeta&lt;/code&gt;也是看重其活跃度。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="运维管理" scheme="https://flytreeleft.github.io/categories/%E8%BF%90%E7%BB%B4%E7%AE%A1%E7%90%86/"/>
+    
+    
+      <category term="Nginx配置" scheme="https://flytreeleft.github.io/tags/Nginx%E9%85%8D%E7%BD%AE/"/>
+    
+  </entry>
+  
+  <entry>
     <title>未来社会形态畅想</title>
     <link href="https://flytreeleft.github.io/the-future-social-formation/"/>
     <id>https://flytreeleft.github.io/the-future-social-formation/</id>
     <published>2017-12-10T05:49:57.000Z</published>
-    <updated>2017-12-18T04:25:36.187Z</updated>
+    <updated>2018-01-17T02:48:10.291Z</updated>
     
     <summary type="html">
     
@@ -31,6 +53,11 @@
 &lt;h2 id=&quot;无现金社会&quot;&gt;&lt;a href=&quot;#无现金社会&quot; class=&quot;headerlink&quot; title=&quot;无现金社会&quot;&gt;&lt;/a&gt;无现金社会&lt;/h2&gt;&lt;p&gt;提要：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;比特币、比特交易网络&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.ethereum.org/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;以太坊&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.iotachina.com/what-is-iota&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;IOTA&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.iotachina.com/ruhezhaohuiiotayue.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;如何找回IOTA余额&lt;/a&gt;：可以从中了解转账机制与流程&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
 &lt;/ul&gt;
     
     </summary>
