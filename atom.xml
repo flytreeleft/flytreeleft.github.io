@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://flytreeleft.github.io/"/>
-  <updated>2018-02-06T14:21:18.397Z</updated>
+  <updated>2018-02-08T01:51:54.381Z</updated>
   <id>https://flytreeleft.github.io/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://flytreeleft.github.io/the-special-case-configuration-of-nginx/"/>
     <id>https://flytreeleft.github.io/the-special-case-configuration-of-nginx/</id>
     <published>2018-02-05T12:30:47.000Z</published>
-    <updated>2018-02-06T14:21:18.397Z</updated>
+    <updated>2018-02-08T01:51:54.381Z</updated>
     
     <summary type="html">
     
@@ -42,7 +42,7 @@
     
       <category term="Nginx配置" scheme="https://flytreeleft.github.io/tags/Nginx%E9%85%8D%E7%BD%AE/"/>
     
-      <category term="Nginx before Squid" scheme="https://flytreeleft.github.io/tags/Nginx-before-Squid/"/>
+      <category term="Nginx over Squid" scheme="https://flytreeleft.github.io/tags/Nginx-over-Squid/"/>
     
       <category term="Nginx防火墙穿透" scheme="https://flytreeleft.github.io/tags/Nginx%E9%98%B2%E7%81%AB%E5%A2%99%E7%A9%BF%E9%80%8F/"/>
     
