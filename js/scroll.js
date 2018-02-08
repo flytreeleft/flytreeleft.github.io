@@ -54,7 +54,7 @@ $(function () {
 
   // head scroll
   $('h1,h2,h3,h4,h5,h6').on('click', function (e) {
-    scrollToHead('#' + $(this).attr('id'))
+    scrollToHead('#' + ($(this).attr('id') || ''))
   })
 
   // head scroll
@@ -72,6 +72,10 @@ $(function () {
 
   // scroll to a head(anchor)
   function scrollToHead (anchor) {
+    if (!anchor || ['#', ''].indexOf(anchor.trim()) >= 0) {
+      return;
+    }
+    updateAnchor(anchor)
     $(anchor).velocity('stop').velocity('scroll', {
       duration: 500,
       easing: 'easeInOutQuart'
@@ -104,7 +108,7 @@ $(function () {
   }
 
   function updateAnchor (anchor) {
-    if (window.history.replaceState && anchor !== window.location.hash) {
+    if (anchor && window.history.replaceState && anchor !== window.location.hash) {
       window.history.replaceState(undefined, undefined, anchor)
     }
   }

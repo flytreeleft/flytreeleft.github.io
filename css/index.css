@@ -679,6 +679,31 @@ footer {
 .quote-lists blockquote:after {
   content: "";
 }
+.quote-lists blockquote h1:nth-of-type(1),
+.quote-lists blockquote h2:nth-of-type(1),
+.quote-lists blockquote h3:nth-of-type(1),
+.quote-lists blockquote h4:nth-of-type(1),
+.quote-lists blockquote h5:nth-of-type(1),
+.quote-lists blockquote h6:nth-of-type(1) {
+  opacity: 0;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  filter: alpha(opacity=0);
+  top: 0;
+  left: 0;
+  bottom: 0;
+  margin: 0;
+  width: 1.8rem;
+  position: absolute;
+  overflow: hidden;
+}
+.quote-lists blockquote h1:before,
+.quote-lists blockquote h2:before,
+.quote-lists blockquote h3:before,
+.quote-lists blockquote h4:before,
+.quote-lists blockquote h5:before,
+.quote-lists blockquote h6:before {
+  display: none;
+}
 .quote-lists blockquote:nth-of-type(8n) {
   border-left-color: #ed5565;
   border-right-color: #da4453;
