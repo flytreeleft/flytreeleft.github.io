@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://flytreeleft.github.io/"/>
-  <updated>2018-02-15T01:50:33.800Z</updated>
+  <updated>2018-02-26T12:54:56.889Z</updated>
   <id>https://flytreeleft.github.io/</id>
   
   <author>
@@ -21,13 +21,13 @@
     <link href="https://flytreeleft.github.io/a-horrible-os-upgrading-for-centos/"/>
     <id>https://flytreeleft.github.io/a-horrible-os-upgrading-for-centos/</id>
     <published>2018-02-15T01:47:42.000Z</published>
-    <updated>2018-02-15T01:50:33.800Z</updated>
+    <updated>2018-02-26T12:54:56.889Z</updated>
     
     <summary type="html">
     
       
       
-        &lt;p&gt;yum check | grep “is a duplicate with” | awk ‘{print $1}’ | sed -E “s/^[0-9]+://g” | while read p; do rpm -e –justdb –nodeps $p; done&lt;/p&gt;
+        &lt;h2 id=&quot;How-to-use-yum-history-to-roll-back-an-update&quot;&gt;&lt;a href=&quot;#How-to-use-yum-history-to-roll-back-an-update&quot; class=&quot;headerlink&quot; title=&quot;Ho
       
     
     </summary>
@@ -46,19 +46,23 @@
     <link href="https://flytreeleft.github.io/the-special-case-configuration-of-nginx/"/>
     <id>https://flytreeleft.github.io/the-special-case-configuration-of-nginx/</id>
     <published>2018-02-05T12:30:47.000Z</published>
-    <updated>2018-02-20T13:01:09.980Z</updated>
+    <updated>2018-02-25T08:53:35.360Z</updated>
     
     <summary type="html">
     
-      &lt;h2 id=&quot;Nginx代理第三方http站点静态资源文件&quot;&gt;&lt;a href=&quot;#Nginx代理第三方http站点静态资源文件&quot; class=&quot;headerlink&quot; title=&quot;Nginx代理第三方http站点静态资源文件&quot;&gt;&lt;/a&gt;Nginx代理第三方http站点静态资源文件&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;关键字&lt;/strong&gt;：&lt;/p&gt;
+      &lt;blockquote&gt;
+&lt;p&gt;本文所使用的相关代码片段可从 &lt;a href=&quot;https://github.com/flytreeleft/docker-nginx-gateway&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://github.com/flytreeleft/docker-nginx-gateway&lt;/a&gt; 得到完整内容。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;Nginx随机展示自定义错误页面&quot;&gt;&lt;a href=&quot;#Nginx随机展示自定义错误页面&quot; class=&quot;headerlink&quot; title=&quot;Nginx随机展示自定义错误页面&quot;&gt;&lt;/a&gt;Nginx随机展示自定义错误页面&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;Source code: &lt;a href=&quot;https://github.com/flytreeleft/docker-nginx-gateway/tree/master/config/error-pages&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://github.com/flytreeleft/docker-nginx-gateway/tree/master/config/error-pages&lt;/a&gt;&lt;br&gt;Custom error pages: &lt;a href=&quot;https://github.com/flytreeleft/docker-nginx-gateway/tree/master/examples/epage.d/all&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://github.com/flytreeleft/docker-nginx-gateway/tree/master/examples/epage.d/all&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;关键字&lt;/strong&gt;：&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;HTTPS反向代理HTTP静态资源&lt;/li&gt;
-&lt;li&gt;单页面Markdown编写与渲染方案&lt;/li&gt;
-&lt;li&gt;Nginx反向代理重定向拦截处理&lt;/li&gt;
+&lt;li&gt;随机展示多个错误页面&lt;/li&gt;
+&lt;li&gt;Nginx自定义错误页面&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;这几天为部门搭建好了Maven仓库，为了便于指导部门同事能够准确配置并启用私有仓库，然后就打算写一份使用说明文档。&lt;/p&gt;
-&lt;p&gt;我不太喜欢写Word，也好几年几乎没用过了，一般都是直接写在部门的&lt;a href=&quot;https://www.mediawiki.org/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Wiki&lt;/a&gt;系统上。不过，一份简单的文档写到Wiki上又不太方便查阅，于是找了找可以在单个HTML里写&lt;a href=&quot;https://en.wikipedia.org/wiki/Markdown&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Markdown&lt;/a&gt;并直接渲染展示的方案。&lt;/p&gt;
-&lt;p&gt;很快我就找到了&lt;a href=&quot;https://github.com/chaitin/strapdown-zeta&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Strapdown Zeta&lt;/a&gt;，其对Mardown的支持较为全面，并且使用很简单，还提供多套主题可自由切换。需要提到的是该库为&lt;a href=&quot;https://github.com/arturadib/strapdown&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Strapdown&lt;/a&gt;的衍生与改进版本，而&lt;code&gt;Strapdown&lt;/code&gt;已经很长时间未更新了，选择&lt;code&gt;Strapdown Zeta&lt;/code&gt;也是看重其活跃度。&lt;/p&gt;
+&lt;p&gt;在访问HTTP站点时最容易出现的错误就是404，于是就有许多非常有个性的404错误页面。而为我们自己的站点放置一些简洁、清爽的错误页面，在资源再利用的前提下，也将为我们自身增加不少好感和亲和力。&lt;/p&gt;
+&lt;p&gt;这里将要介绍的便是如何为我们的站点配置自定义错误页面，并同时支持为相同错误随机展示不同的错误页面。&lt;/p&gt;
     
     </summary>
     
@@ -72,6 +76,8 @@
       <category term="Nginx防火墙穿透" scheme="https://flytreeleft.github.io/tags/Nginx%E9%98%B2%E7%81%AB%E5%A2%99%E7%A9%BF%E9%80%8F/"/>
     
       <category term="HTTPS代理HTTP资源" scheme="https://flytreeleft.github.io/tags/HTTPS%E4%BB%A3%E7%90%86HTTP%E8%B5%84%E6%BA%90/"/>
+    
+      <category term="Nginx自定义错误页面" scheme="https://flytreeleft.github.io/tags/Nginx%E8%87%AA%E5%AE%9A%E4%B9%89%E9%94%99%E8%AF%AF%E9%A1%B5%E9%9D%A2/"/>
     
   </entry>
   
