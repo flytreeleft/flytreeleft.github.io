@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://flytreeleft.github.io/"/>
-  <updated>2018-09-19T16:20:42.682Z</updated>
+  <updated>2018-09-19T16:27:13.592Z</updated>
   <id>https://flytreeleft.github.io/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://flytreeleft.github.io/algorithm-find-mode-via-divide-md/"/>
     <id>https://flytreeleft.github.io/algorithm-find-mode-via-divide-md/</id>
     <published>2018-09-19T13:38:34.000Z</published>
-    <updated>2018-09-19T16:20:42.682Z</updated>
+    <updated>2018-09-19T16:27:13.592Z</updated>
     
     <summary type="html">
     
@@ -31,7 +31,7 @@
 &lt;p&gt;若文章中的代码存在问题或逻辑错误，请通过邮件等形式（见文章结尾）告知于本文作者以便及时修正错误或改进代码。&lt;/p&gt;
 &lt;p&gt;PS：若为转载该文章，请务必注明来源，本站点欢迎大家转载。&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;h2 id=&quot;问题描述&quot;&gt;&lt;a href=&quot;#问题描述&quot; class=&quot;headerlink&quot; title=&quot;问题描述&quot;&gt;&lt;/a&gt;问题描述&lt;/h2&gt;&lt;p&gt;给定含有n个元素的多重集合&lt;code&gt;S&lt;/code&gt;，每个元素在&lt;code&gt;S&lt;/code&gt;中&lt;u&gt;出现的次数&lt;/u&gt;称为该元素的&lt;strong&gt;重数&lt;/strong&gt;。多重集&lt;code&gt;S&lt;/code&gt;中&lt;u&gt;重数最大的元素&lt;/u&gt;称为&lt;a href=&quot;https://zh.wikipedia.org/wiki/%E4%BC%97%E6%95%B0_(%E6%95%B0%E5%AD%A6&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;众数&lt;/a&gt;)（&lt;strong&gt;mode&lt;/strong&gt;）。&lt;/p&gt;
+&lt;h2 id=&quot;问题描述&quot;&gt;&lt;a href=&quot;#问题描述&quot; class=&quot;headerlink&quot; title=&quot;问题描述&quot;&gt;&lt;/a&gt;问题描述&lt;/h2&gt;&lt;p&gt;给定含有n个元素的多重集合&lt;code&gt;S&lt;/code&gt;，每个元素在&lt;code&gt;S&lt;/code&gt;中&lt;u&gt;出现的次数&lt;/u&gt;称为该元素的&lt;strong&gt;重数&lt;/strong&gt;。多重集&lt;code&gt;S&lt;/code&gt;中&lt;u&gt;重数最大的元素&lt;/u&gt;称为&lt;a href=&quot;https://zh.wikipedia.org/wiki/%E4%BC%97%E6%95%B0_(%E6%95%B0%E5%AD%A6)&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;众数&lt;/a&gt;（&lt;strong&gt;mode&lt;/strong&gt;）。&lt;/p&gt;
 &lt;p&gt;例如，&lt;code&gt;S={1，2，2，2，3，5}&lt;/code&gt;，则，多重集&lt;code&gt;S&lt;/code&gt;的众数是&lt;code&gt;2&lt;/code&gt;，其重数为&lt;code&gt;3&lt;/code&gt;。&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;注：众数可能存在多个。&lt;/p&gt;
