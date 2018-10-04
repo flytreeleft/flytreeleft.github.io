@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://flytreeleft.github.io/"/>
-  <updated>2018-09-20T01:47:37.976Z</updated>
+  <updated>2018-10-04T10:51:03.453Z</updated>
   <id>https://flytreeleft.github.io/</id>
   
   <author>
@@ -17,11 +17,41 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>算法分析：求解斐波那契数列</title>
+    <link href="https://flytreeleft.github.io/algorithm-calculating-fibonacci-numbers/"/>
+    <id>https://flytreeleft.github.io/algorithm-calculating-fibonacci-numbers/</id>
+    <published>2018-10-04T05:58:17.000Z</published>
+    <updated>2018-10-04T10:51:03.453Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;blockquote&gt;
+&lt;p&gt;算法分析系列文章中的代码可被任何人无偿使用于任何场景且无需注明来源也不必在使用前征得本文作者同意。&lt;/p&gt;
+&lt;p&gt;算法分析系列文章旨在传播准确、完整、简洁、易懂、规范的代码实现，并传授基本的编程思想和良好的编码习惯与技巧。&lt;/p&gt;
+&lt;p&gt;若文章中的
+      
+    
+    </summary>
+    
+      <category term="算法分析" scheme="https://flytreeleft.github.io/categories/%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90/"/>
+    
+    
+      <category term="动态规划" scheme="https://flytreeleft.github.io/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/"/>
+    
+      <category term="斐波那契" scheme="https://flytreeleft.github.io/tags/%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91/"/>
+    
+      <category term="Fibonacci" scheme="https://flytreeleft.github.io/tags/Fibonacci/"/>
+    
+  </entry>
+  
+  <entry>
     <title>算法分析：分治法求解给定集合中的众数及其重数</title>
     <link href="https://flytreeleft.github.io/algorithm-using-divide-and-conquer-method-to-find-the-mode-in-a-set/"/>
     <id>https://flytreeleft.github.io/algorithm-using-divide-and-conquer-method-to-find-the-mode-in-a-set/</id>
     <published>2018-09-19T13:38:34.000Z</published>
-    <updated>2018-09-20T01:47:37.976Z</updated>
+    <updated>2018-10-04T06:31:21.037Z</updated>
     
     <summary type="html">
     
