@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://flytreeleft.github.io/"/>
-  <updated>2018-10-04T10:51:03.453Z</updated>
+  <updated>2018-10-04T10:59:23.974Z</updated>
   <id>https://flytreeleft.github.io/</id>
   
   <author>
@@ -21,17 +21,25 @@
     <link href="https://flytreeleft.github.io/algorithm-calculating-fibonacci-numbers/"/>
     <id>https://flytreeleft.github.io/algorithm-calculating-fibonacci-numbers/</id>
     <published>2018-10-04T05:58:17.000Z</published>
-    <updated>2018-10-04T10:51:03.453Z</updated>
+    <updated>2018-10-04T10:59:23.974Z</updated>
     
     <summary type="html">
     
-      
-      
-        &lt;blockquote&gt;
+      &lt;blockquote&gt;
 &lt;p&gt;算法分析系列文章中的代码可被任何人无偿使用于任何场景且无需注明来源也不必在使用前征得本文作者同意。&lt;/p&gt;
 &lt;p&gt;算法分析系列文章旨在传播准确、完整、简洁、易懂、规范的代码实现，并传授基本的编程思想和良好的编码习惯与技巧。&lt;/p&gt;
-&lt;p&gt;若文章中的
-      
+&lt;p&gt;若文章中的代码存在问题或逻辑错误，请通过邮件等形式（见文章结尾）告知于本文作者以便及时修正错误或改进代码。&lt;/p&gt;
+&lt;p&gt;PS：若为转载该文章，请务必注明来源，本站点欢迎大家转载。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;问题描述&quot;&gt;&lt;a href=&quot;#问题描述&quot; class=&quot;headerlink&quot; title=&quot;问题描述&quot;&gt;&lt;/a&gt;问题描述&lt;/h2&gt;&lt;p&gt;从0和1开始，之后的每一个数均为前两个数的和，这样性质的数依次排列，便称为&lt;a href=&quot;https://zh.wikipedia.org/wiki/%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0%E5%88%97&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;斐波那契数列&lt;/a&gt;。即形成如下数列形式：&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, ...&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;用数学公式表示该数列即为：&lt;/p&gt;
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;
+F(n) = \begin{cases}
+0,                      &amp; n = 0 \\
+1,                      &amp; n = 1 \\
+F(n - 1) + F(n - 2),    &amp; n &gt;= 2
+\end{cases}&lt;/script&gt;&lt;p&gt;本案例所要解决的就是：给定一个整数&lt;code&gt;n&lt;/code&gt;，求解斐波那契数列中第&lt;code&gt;n&lt;/code&gt;项的数值。注意，&lt;code&gt;0&lt;/code&gt;表示第零项，而不是第一项。&lt;/p&gt;
     
     </summary>
     
