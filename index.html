@@ -1,0 +1,109 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta name="generator" content="Hexo 3.9.0"><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content><meta name="keywords" content="IT,KISS"><meta name="author" content="flytreeleft,flytreeleft@126.com"><meta name="copyright" content="flytreeleft"><title>Keep it simple, stupid! | flytreeleft's Blog</title><link rel="shortcut icon" href="/assets/profile/favicon.png"><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.min.css?version=1.3"><script>var GLOBAL = { 
+  root: '/',
+  algolia: undefined,
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  localSearch: {"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}"},"path":"search.xml"}
+} </script></head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar"><div class="author-info"><div class="author-info__avatar text-center"><img src="/assets/profile/avatar.jpg"></div><div class="author-info__name text-center">flytreeleft</div><div class="author-info__description text-center"></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">文章</span><span class="pull-right">13</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">标签</span><span class="pull-right">24</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">分类</span><span class="pull-right">9</span></a></div><hr><div class="author-info-links"><div class="author-info-links__title text-center">Links</div><a class="author-info-links__name text-center" href="https://coolshell.cn/" target="_blank">酷壳</a><a class="author-info-links__name text-center" href="https://www.infoq.com/" target="_blank">InfoQ</a><a class="author-info-links__name text-center" href="http://www.yinwang.org/" target="_blank">当然我在扯淡</a></div></div></div><nav id="nav" style="background-image: url(/assets/profile/walle-watch-the-stars-sky.jpg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">flytreeleft's Blog</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus"><a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a><a class="site-page" href="/quotes">Quotes</a><a class="site-page" href="/about">About</a></span></div><div id="site-info"><div id="site-title">flytreeleft's Blog</div><div id="site-sub-title">Keep it simple, stupid!</div><div id="site-social-icons"><a class="social-icon" href="https://github.com/flytreeleft" target="_blank"><i class="fa fa-github"></i></a><a class="social-icon" href="https://twitter.com/flytreeleft" target="_blank"><i class="fa fa-twitter"></i></a><a class="social-icon search"><i class="fa fa-search"></i></a></div></div><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">Local Search</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts"></div></div></div><hr><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><hr class="local-search-stats__hr">Powered by <span style="color: #49B1F5">hexo-generator-search</span></div></div><span class="search-close-button"><i class="fa fa-times"></i></span></div><div class="search-mask"></div></nav><div id="content-outer"><div class="layout" id="content-inner"><div class="recent-post-item"><a class="article-title" href="/algorithm-finding-the-longest-common-sequence/">算法分析：求解最长公共子序列</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2018-10-06</time><div class="content"><blockquote>
+<p>算法分析系列文章中的代码可被任何人无偿使用于任何场景且无需注明来源也不必在使用前征得本文作者同意。</p>
+<p>算法分析系列文章旨在传播准确、完整、简洁、易懂、规范的代码实现，并传授基本的编程思想和良好的编码习惯与技巧。</p>
+<p>若文章中的代码存在问题或逻辑错误，请通过邮件等形式（见文章结尾）告知于本文作者以便及时修正错误或改进代码。</p>
+<p>算法系列文章不可避免地会参考和学习众多网友的成果，在行文风格、内容及求解思路上也会进行借鉴，如有侵权嫌疑，请联系本文作者。</p>
+<p>PS：若为转载该文章，请务必注明来源，本站点欢迎大家转载。</p>
+</blockquote>
+<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>如果序列 <script type="math/tex">S_1</script> 中的所有元素按照其在 <script type="math/tex">S_1</script> 中的出现顺序依次出现在另一个序列 <script type="math/tex">S_2</script> 中，则称 <script type="math/tex">S_1</script> 为 <script type="math/tex">S_2</script> 的<a href="https://zh.wikipedia.org/wiki/%E5%AD%90%E5%BA%8F%E5%88%97" target="_blank" rel="noopener">子序列</a>。</p>
+<blockquote>
+<p>子序列不要求位置的连续性（即，元素相邻），只要相对顺序不变即可。</p>
+</blockquote>
+<p>若给定一个序列集合（数量大于或等于2，但通常为两个序列），则这些序列所共同拥有的子序列，称为<strong>公共子序列</strong>。而在这些公共子序列中长度最长的子序列则称为该序列集合的<a href="https://zh.wikipedia.org/wiki/%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E5%AD%90%E5%BA%8F%E5%88%97" target="_blank" rel="noopener">最长公共子序列</a>（Longest Common Sequence, LCS）。</p>
+<p>本例所要求的便是求解任意两个序列的最长公共子序列（可能存在多个不同的序列），并打印其长度及其其中的任意一个序列。<br></p></div><a class="more" href="/algorithm-finding-the-longest-common-sequence/#more">阅读更多</a><hr></div><div class="recent-post-item"><a class="article-title" href="/algorithm-calculating-maximum-interval-sum/">算法分析：求解最大子段和</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2018-10-05</time><div class="content"><blockquote>
+<p>算法分析系列文章中的代码可被任何人无偿使用于任何场景且无需注明来源也不必在使用前征得本文作者同意。</p>
+<p>算法分析系列文章旨在传播准确、完整、简洁、易懂、规范的代码实现，并传授基本的编程思想和良好的编码习惯与技巧。</p>
+<p>若文章中的代码存在问题或逻辑错误，请通过邮件等形式（见文章结尾）告知于本文作者以便及时修正错误或改进代码。</p>
+<p>算法系列文章不可避免地会参考和学习众多网友的成果，在行文风格、内容及求解思路上也会进行借鉴，如有侵权嫌疑，请联系本文作者。</p>
+<p>PS：若为转载该文章，请务必注明来源，本站点欢迎大家转载。</p>
+</blockquote>
+<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>给定一个<strong>整数</strong>（正负数不限）序列 $a_1, a_2, a_3, …, a_n$ ，从该序列中选取任意<strong>相邻</strong>的一段求和（简称为「子段和」），求解该序列的<strong>最大子段和</strong>。注：若整个序列的所有元素均为负数，则其最大子段和固定为0。</p>
+<p>例如，序列<code>[64, -24, 88, -39, -54, 16]</code>的最大子段和为<code>128</code>（= <code>64 + (-24) + 88</code>）。<br></p></div><a class="more" href="/algorithm-calculating-maximum-interval-sum/#more">阅读更多</a><hr></div><div class="recent-post-item"><a class="article-title" href="/algorithm-calculating-fibonacci-numbers/">算法分析：求解斐波那契数列</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2018-10-04</time><div class="content"><blockquote>
+<p>算法分析系列文章中的代码可被任何人无偿使用于任何场景且无需注明来源也不必在使用前征得本文作者同意。</p>
+<p>算法分析系列文章旨在传播准确、完整、简洁、易懂、规范的代码实现，并传授基本的编程思想和良好的编码习惯与技巧。</p>
+<p>若文章中的代码存在问题或逻辑错误，请通过邮件等形式（见文章结尾）告知于本文作者以便及时修正错误或改进代码。</p>
+<p>算法系列文章不可避免地会参考和学习众多网友的成果，在行文风格、内容及求解思路上也会进行借鉴，如有侵权嫌疑，请联系本文作者。</p>
+<p>PS：若为转载该文章，请务必注明来源，本站点欢迎大家转载。</p>
+</blockquote>
+<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>从0和1开始，之后的每一个数均为前两个数的和，这样性质的数依次排列，便称为<a href="https://zh.wikipedia.org/wiki/%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0%E5%88%97" target="_blank" rel="noopener">斐波那契数列</a>。即形成如下数列形式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, ...</span><br></pre></td></tr></table></figure>
+<p>用数学公式表示该数列即为：</p>
+<script type="math/tex; mode=display">
+F(n) = \begin{cases}
+0,                      & n = 0 \\
+1,                      & n = 1 \\
+F(n - 1) + F(n - 2),    & n >= 2
+\end{cases}</script><p>本案例所要解决的就是：给定一个整数<code>n</code>，求解斐波那契数列中第<code>n</code>项的数值。注意，<code>0</code>表示第零项，而不是第一项。<br></p></div><a class="more" href="/algorithm-calculating-fibonacci-numbers/#more">阅读更多</a><hr></div><div class="recent-post-item"><a class="article-title" href="/algorithm-using-divide-and-conquer-method-to-find-the-mode-in-a-set/">算法分析：分治法求解给定集合中的众数及其重数</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2018-09-19</time><div class="content"><blockquote>
+<p>算法分析系列文章中的代码可被任何人无偿使用于任何场景且无需注明来源也不必在使用前征得本文作者同意。</p>
+<p>算法分析系列文章旨在传播准确、完整、简洁、易懂、规范的代码实现，并传授基本的编程思想和良好的编码习惯与技巧。</p>
+<p>若文章中的代码存在问题或逻辑错误，请通过邮件等形式（见文章结尾）告知于本文作者以便及时修正错误或改进代码。</p>
+<p>算法系列文章不可避免地会参考和学习众多网友的成果，在行文风格、内容及求解思路上也会进行借鉴，如有侵权嫌疑，请联系本文作者。</p>
+<p>PS：若为转载该文章，请务必注明来源，本站点欢迎大家转载。</p>
+</blockquote>
+<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>给定含有n个元素的多重集合<code>S</code>，每个元素在<code>S</code>中<u>出现的次数</u>称为该元素的<strong>重数</strong>。多重集<code>S</code>中<u>重数最大的元素</u>称为<a href="https://zh.wikipedia.org/wiki/%E4%BC%97%E6%95%B0_(%E6%95%B0%E5%AD%A6)" target="_blank" rel="noopener">众数</a>（<strong>mode</strong>）。</p>
+<p>例如，<code>S={1，2，2，2，3，5}</code>，则，多重集<code>S</code>的众数是<code>2</code>，其重数为<code>3</code>。</p>
+<blockquote>
+<p>注：众数可能存在多个。</p>
+</blockquote>
+<p>本案例要求采用<a href="https://zh.wikipedia.org/wiki/%E5%88%86%E6%B2%BB%E6%B3%95" target="_blank" rel="noopener">分治法</a>求解给定集合中的众数及其重数，存在多个众数时选择第一个即可。</p>
+<blockquote>
+<p>分治法，即，把一个复杂的问题分成两个或更多的相同或相似的子问题，直到最后子问题可以简单的直接求解，原问题的解即子问题的解的合并。（引用自「维基百科」）<br></p></blockquote></div><a class="more" href="/algorithm-using-divide-and-conquer-method-to-find-the-mode-in-a-set/#more">阅读更多</a><hr></div><div class="recent-post-item"><a class="article-title" href="/a-horrible-os-upgrading-for-centos/">记一次惊心动魄的CentOS系统升级经历</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2018-02-15</time><div class="content"></div><a class="more" href="/a-horrible-os-upgrading-for-centos/#more">阅读更多</a><hr></div><div class="recent-post-item"><a class="article-title" href="/the-special-case-configuration-of-nginx/">Nginx特例场景配置</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2018-02-05</time><div class="content"><blockquote>
+<p>本文所使用的相关代码片段可从 <a href="https://github.com/flytreeleft/docker-nginx-gateway" target="_blank" rel="noopener">https://github.com/flytreeleft/docker-nginx-gateway</a> 得到完整内容。</p>
+</blockquote>
+<h2 id="Nginx随机展示自定义错误页面"><a href="#Nginx随机展示自定义错误页面" class="headerlink" title="Nginx随机展示自定义错误页面"></a>Nginx随机展示自定义错误页面</h2><blockquote>
+<p>Source code: <a href="https://github.com/flytreeleft/docker-nginx-gateway/tree/master/config/error-pages" target="_blank" rel="noopener">https://github.com/flytreeleft/docker-nginx-gateway/tree/master/config/error-pages</a><br>Custom error pages: <a href="https://github.com/flytreeleft/docker-nginx-gateway/tree/master/examples/epage.d/all" target="_blank" rel="noopener">https://github.com/flytreeleft/docker-nginx-gateway/tree/master/examples/epage.d/all</a></p>
+</blockquote>
+<p><strong>关键字</strong>：</p>
+<ul>
+<li>随机展示多个错误页面</li>
+<li>Nginx自定义错误页面</li>
+</ul>
+<p>在访问HTTP站点时最容易出现的错误就是404，于是就有许多非常有个性的404错误页面。而为我们自己的站点放置一些简洁、清爽的错误页面，在资源再利用的前提下，也将为我们自身增加不少好感和亲和力。</p>
+<p>这里将要介绍的便是如何为我们的站点配置自定义错误页面，并同时支持为相同错误随机展示不同的错误页面。</p></div><a class="more" href="/the-special-case-configuration-of-nginx/#more">阅读更多</a><hr></div><div class="recent-post-item"><a class="article-title" href="/the-future-social-formation/">未来社会形态畅想</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2017-12-10</time><div class="content"><blockquote>
+<p>The post isn’t finished yet, it will be updated anytime!</p>
+</blockquote>
+<h2 id="无现金社会"><a href="#无现金社会" class="headerlink" title="无现金社会"></a>无现金社会</h2><p>提要：</p>
+<ul>
+<li>比特币、比特交易网络</li>
+<li><a href="https://www.ethereum.org/" target="_blank" rel="noopener">以太坊</a></li>
+<li><a href="http://www.iotachina.com/what-is-iota" target="_blank" rel="noopener">IOTA</a><ul>
+<li><a href="http://www.iotachina.com/ruhezhaohuiiotayue.html" target="_blank" rel="noopener">如何找回IOTA余额</a>：可以从中了解转账机制与流程</li>
+</ul>
+</li>
+</ul></div><a class="more" href="/the-future-social-formation/#more">阅读更多</a><hr></div><div class="recent-post-item"><a class="article-title" href="/the-evil-behaviors/">作恶行为清单</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2017-12-04</time><div class="content"><blockquote>
+<p>列举日常和网络中所发现的软件、应用、服务等的「作恶」行为，将其永久钉在「耻辱柱」上。有条件的或有候选方案的，应主动弃用之！<br>坚持开放、坚持自由。点击下载<a href="http://mirror.lihnidos.org/GNU/savannah/blug/fsfs-zh/fsfs-zh.pdf" target="_blank" rel="noopener">自由软件自由社会.pdf</a><br>就事论事，不针对个人、企业、平台，挖掘现象本质，努力尝试寻找更优方案</p>
+</blockquote>
+<h2 id="为逼迫用户使用客户端而阉割Web端的基本功能"><a href="#为逼迫用户使用客户端而阉割Web端的基本功能" class="headerlink" title="为逼迫用户使用客户端而阉割Web端的基本功能"></a>为逼迫用户使用客户端而阉割Web端的基本功能</h2><ul>
+<li>案例： <a href="https://2.taobao.com/" target="_blank" rel="noopener">闲鱼</a>Web端隐藏搜索框</li>
+<li>来源： <a href="https://www.appinn.com/xianyu-search-box/" target="_blank" rel="noopener">https://www.appinn.com/xianyu-search-box/</a></li>
+<li>评语： 若欲达KPI，必先「中二自宫」</li></ul></div><a class="more" href="/the-evil-behaviors/#more">阅读更多</a><hr></div><div class="recent-post-item"><a class="article-title" href="/the-better-software-development-practice/">软件开发最佳实践</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2017-12-04</time><div class="content"><blockquote>
+<p>The post isn’t finished yet, it will be updated anytime!</p>
+</blockquote></div><a class="more" href="/the-better-software-development-practice/#more">阅读更多</a><hr></div><div class="recent-post-item"><a class="article-title" href="/the-software-development-criterion/">软件开发行为准则</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2017-12-04</time><div class="content"><blockquote>
+<p>The post isn’t finished yet, it will be updated anytime!</p>
+</blockquote>
+<h2 id="谨慎对待用户隐私"><a href="#谨慎对待用户隐私" class="headerlink" title="谨慎对待用户隐私"></a>谨慎对待用户隐私</h2><p>提要：</p>
+<ul>
+<li>不是仅用户确认后的数据才算是「用户隐私」，任何与用户相关的数据都应该「默认」视为用户隐私，<u>不需要任何形式的确认</u>，<br>而只有经过用户确认和同意的数据方可用作其他用途，且前提必须是明确告知数据为何要做次用途，以及将被如何利用、涉及哪些风险等</li>
+</ul></div><a class="more" href="/the-software-development-criterion/#more">阅读更多</a><hr></div><nav id="pagination"><div class="pagination"><span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer><div class="layout" id="footer"><div class="copyright">&copy;2017 - 2019 By flytreeleft</div><div class="framework-info"><span>驱动 - </span><a href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="/js/third-party/anime.min.js"></script><script src="/js/third-party/jquery.min.js"></script><script src="/js/third-party/jquery.fancybox.min.js"></script><script src="/js/third-party/velocity.min.js"></script><script src="/js/third-party/velocity.ui.min.js"></script><script src="https://cdn.jsdelivr.net/gh/haoel/anti-baidu/js/anti-baidu-latest.min.js"></script><script src="/js/utils.js?version=1.3"></script><script src="/js/fancybox.js?version=1.3"></script><script src="/js/sidebar.js?version=1.3"></script><script src="/js/copy.js?version=1.3"></script><script src="/js/fireworks.js?version=1.3"></script><script src="/js/transition.js?version=1.3"></script><script src="/js/scroll.js?version=1.3"></script><script src="/js/head.js?version=1.3"></script><script type="text/x-mathjax-config">MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+    processEscapes: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+  }
+});
+</script><script type="text/x-mathjax-config">MathJax.Hub.Queue(function() {
+  var all = MathJax.Hub.getAllJax(), i;
+  for (i=0; i < all.length; i += 1) {
+    all[i].SourceElement().parentNode.className += ' has-jax';
+  }
+});
+</script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script src="/js/search/local-search.js"></script></body></html>
