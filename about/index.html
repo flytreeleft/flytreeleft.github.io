@@ -37,14 +37,14 @@
 <li>了解分布式文件系统，具备GlusterFS、Ceph部署及使用经验</li>
 <li>了解Android应用的开发，并具备基础的开发经验和能力</li>
 </ul>
-<h2 id="开源项目"><a href="#开源项目" class="headerlink" title="开源项目"></a>开源项目</h2><h3 id="nexus3-keycloak-plugin"><a href="#nexus3-keycloak-plugin" class="headerlink" title="nexus3-keycloak-plugin"></a><a href="https://github.com/flytreeleft/nexus3-keycloak-plugin" target="_blank" rel="noopener">nexus3-keycloak-plugin</a></h3><p>支持Keycloak用户统一认证的Sonatype Nexus3插件。</p>
+<h2 id="开源项目"><a href="#开源项目" class="headerlink" title="开源项目"></a>开源项目</h2><h3 id="nexus3-keycloak-plugin"><a href="#nexus3-keycloak-plugin" class="headerlink" title="nexus3-keycloak-plugin"></a><a href="https://github.com/flytreeleft/nexus3-keycloak-plugin" target="_blank" rel="noopener">nexus3-keycloak-plugin</a></h3><p>支持<a href="https://www.keycloak.org/" target="_blank" rel="noopener">Keycloak</a>用户统一认证的<a href="https://www.sonatype.com/nexus-repository-oss" target="_blank" rel="noopener">Sonatype Nexus3</a>插件。</p>
 <p>其支持并提供如下特性：</p>
 <ul>
 <li>将Keycloak的Client Role、Realm Role、Realm Group三类角色/组映射为Nexus3的角色，以支持不同层级的用户权限控制需求</li>
 <li>支持多个Keycloak Realm（至多4个），从而满足组织同时对内部和外部用户（两类用户隔离在不同的Realm中）的访问控制需求</li>
 <li>在Nginx反向代理的配合下实现基于Keycloak的单点登录（SSO）和二次登录验证</li>
 </ul>
-<h3 id="docker-nginx-gateway"><a href="#docker-nginx-gateway" class="headerlink" title="docker-nginx-gateway"></a><a href="https://github.com/flytreeleft/docker-nginx-gateway" target="_blank" rel="noopener">docker-nginx-gateway</a></h3><p>Nginx网关（反向代理）的Docker镜像构建脚本。</p>
+<h3 id="docker-nginx-gateway"><a href="#docker-nginx-gateway" class="headerlink" title="docker-nginx-gateway"></a><a href="https://github.com/flytreeleft/docker-nginx-gateway" target="_blank" rel="noopener">docker-nginx-gateway</a></h3><p><a href="https://www.nginx.com/" target="_blank" rel="noopener">Nginx</a>网关（反向代理）的Docker镜像构建脚本。</p>
 <p>其提供特性如下：</p>
 <ul>
 <li>可启用<a href="https://letsencrypt.org/" target="_blank" rel="noopener">Let’s Encrypt</a> HTTPS站点</li>
@@ -54,12 +54,12 @@
 <li>支持反向代理HTTP和TCP流量</li>
 <li>每个域名采用独立的配置文件，根据实际需求以提供静态站点服务或反向代理至后端服务</li>
 <li>支持在Kubernetes中以多个Pod副本运行</li>
-<li>支持访问日志按天滚动创建并在日志文件中加入日期，如，<code>access_2018-04-26.log</code></li>
+<li>支持访问日志按天滚动写入日志文件，如，<code>access_2018-04-26.log</code></li>
 <li>支持通过OpenID（使用<a href="https://github.com/zmartzone/lua-resty-openidc" target="_blank" rel="noopener">lua-resty-openidc</a>实现）进行用户访问认证，并可将指定IP加入白名单</li>
 <li>可在构建镜像时设定是否引入<a href="https://github.com/leev/ngx_http_geoip2_module" target="_blank" rel="noopener">GeoIp2</a>地址库</li>
 <li>集成<a href="https://github.com/yandex/gixy" target="_blank" rel="noopener">Gixy</a>以分析和检查Nginx配置是否存在安全问题</li>
 </ul>
-<h3 id="GtkShot"><a href="#GtkShot" class="headerlink" title="GtkShot"></a><a href="https://github.com/flytreeleft/GtkShot" target="_blank" rel="noopener">GtkShot</a></h3><p>基于GTK2的Linux屏幕截图工具。</p>
+<h3 id="GtkShot"><a href="#GtkShot" class="headerlink" title="GtkShot"></a><a href="https://github.com/flytreeleft/GtkShot" target="_blank" rel="noopener">GtkShot</a></h3><p>基于<a href="https://developer.gnome.org/gtk2/" target="_blank" rel="noopener">GTK2</a>的Linux屏幕截图工具。</p>
 <p>其具备如下特性：</p>
 <ul>
 <li>支持快捷键撤销、保存、移动选取等操作</li>
