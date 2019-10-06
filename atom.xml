@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://flytreeleft.github.io/"/>
-  <updated>2019-10-04T04:56:04.212Z</updated>
+  <updated>2019-10-06T03:35:13.064Z</updated>
   <id>https://flytreeleft.github.io/</id>
   
   <author>
@@ -17,11 +17,90 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>内存都去哪儿了</title>
+    <link href="https://flytreeleft.github.io/the-jvm-dump-analyse-for-where-is-the-memory/"/>
+    <id>https://flytreeleft.github.io/the-jvm-dump-analyse-for-where-is-the-memory/</id>
+    <published>2019-10-05T13:41:47.000Z</published>
+    <updated>2019-10-06T03:35:13.064Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;提要&quot;&gt;&lt;a href=&quot;#提要&quot; class=&quot;headerlink&quot; title=&quot;提要&quot;&gt;&lt;/a&gt;提要&lt;/h2&gt;&lt;p&gt;在开始分析之前先了解一下下面几个相关术语：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Shallow Heap&lt;/strong&gt;：对象自身占用的内存大小（包含基本数据类型），不包括它引用对象的大小；&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Retained Heap&lt;/strong&gt;：&lt;strong&gt;Shallow Heap&lt;/strong&gt; + 所有直接或者间接引用对象占用的内存（即该对象被GC回收后，可以被回收的内存）；&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;GC Root&lt;/strong&gt;：被堆外对象引用的对象；&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Dominator Tree&lt;/strong&gt;：以支配树方式描述的对象引用关系；&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;有关JVM内存转储方式的说明见&lt;a href=&quot;/the-jvm-dump-analyse-for-tomcat-memory-leak/&quot;&gt;JVM内存分析：Tomcat内存泄漏&lt;/a&gt;。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;案例分析&quot;&gt;&lt;a href=&quot;#案例分析&quot; class=&quot;headerlink&quot; title=&quot;案例分析&quot;&gt;&lt;/a&gt;案例分析&lt;/h2&gt;&lt;p&gt;最近服务器的内存又在狂飙了，网关响应缓慢，Jenkins完成构建需要长达2个多小时。到底疯狂到什么程度呢？用&lt;code&gt;htop&lt;/code&gt;命令看看：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/jvm-dump/where-is-the-memory/jvm-no-gc-for-high-memory-usage-analysis-via-htop.png&quot; alt&gt;&lt;br&gt;
+    
+    </summary>
+    
+      <category term="JVM内存分析" scheme="https://flytreeleft.github.io/categories/JVM%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90/"/>
+    
+    
+      <category term="内存溢出" scheme="https://flytreeleft.github.io/tags/%E5%86%85%E5%AD%98%E6%BA%A2%E5%87%BA/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>数据库连接池耗尽</title>
+    <link href="https://flytreeleft.github.io/the-jvm-dump-analyse-for-connection-pool-exhausted/"/>
+    <id>https://flytreeleft.github.io/the-jvm-dump-analyse-for-connection-pool-exhausted/</id>
+    <published>2019-10-05T12:40:57.000Z</published>
+    <updated>2019-10-06T03:35:13.064Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;提要&quot;&gt;&lt;a href=&quot;#提要&quot; class=&quot;headerlink&quot; title=&quot;提要&quot;&gt;&lt;/a&gt;提要&lt;/h2&gt;&lt;p&gt;由于数据库连接十分耗时，采取&lt;strong&gt;即需即连&lt;/strong&gt;的方式会导致应用响应缓慢，因此，在Java应用中均采用&lt;strong&gt;数据库连接池&lt;/strong&gt;统一维护一定数量的&lt;code&gt;Connection&lt;/code&gt;对象，连接池中的&lt;code&gt;Connection&lt;/code&gt;均保持与数据库的长连接，这样，该连接将随时可用，从而提高应用响应和处理速度。&lt;/p&gt;
+&lt;p&gt;但是，在普遍的使用不当的情形中，最多的问题便是没有及时&lt;code&gt;释放连接&lt;/code&gt;，这里的释放是指将&lt;code&gt;Connection&lt;/code&gt;对象归还连接池。若连接未被释放，则连接池将被很快耗尽（Exhausted），从而无法提供新的连接，最终导致应用不能进行数据库操作，并在尝试获取新的连接时出现以下异常：&lt;br&gt;&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;...&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Caused by: org.hibernate.exception.GenericJDBCException: Could not open connection&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    at org.hibernate.exception.internal.StandardSQLExceptionConverter.convert(StandardSQLExceptionConverter.java:&lt;span class=&quot;number&quot;&gt;54&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:&lt;span class=&quot;number&quot;&gt;125&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:&lt;span class=&quot;number&quot;&gt;110&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    at org.hibernate.engine.jdbc.internal.LogicalConnectionImpl.obtainConnection(LogicalConnectionImpl.java:&lt;span class=&quot;number&quot;&gt;221&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    at org.hibernate.engine.jdbc.internal.LogicalConnectionImpl.getConnection(LogicalConnectionImpl.java:&lt;span class=&quot;number&quot;&gt;157&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    at org.hibernate.internal.SessionImpl.connection(SessionImpl.java:&lt;span class=&quot;number&quot;&gt;550&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    at org.springframework.orm.hibernate4.HibernateTransactionManager.doBegin(HibernateTransactionManager.java:&lt;span class=&quot;number&quot;&gt;426&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    ... &lt;span class=&quot;number&quot;&gt;9&lt;/span&gt; more&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Caused by: org.apache.commons.dbcp.SQLNestedException: Cannot get a connection, pool error Timeout waiting &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; idle object&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    at org.apache.commons.dbcp.PoolingDataSource.getConnection(PoolingDataSource.java:&lt;span class=&quot;number&quot;&gt;114&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    at org.apache.commons.dbcp.BasicDataSource.getConnection(BasicDataSource.java:&lt;span class=&quot;number&quot;&gt;1044&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    at org.hibernate.service.jdbc.connections.internal.DatasourceConnectionProviderImpl.getConnection(DatasourceConnectionProviderImpl.java:&lt;span class=&quot;number&quot;&gt;141&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    at org.hibernate.internal.AbstractSessionImpl$NonContextualJdbcConnectionAccess.obtainConnection(AbstractSessionImpl.java:&lt;span class=&quot;number&quot;&gt;292&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    at org.hibernate.engine.jdbc.internal.LogicalConnectionImpl.obtainConnection(LogicalConnectionImpl.java:&lt;span class=&quot;number&quot;&gt;214&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    ... &lt;span class=&quot;number&quot;&gt;12&lt;/span&gt; more&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Caused by: java.util.NoSuchElementException: Timeout waiting &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; idle object&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    at org.apache.commons.pool.impl.GenericObjectPool.borrowObject(GenericObjectPool.java:&lt;span class=&quot;number&quot;&gt;1174&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    at org.apache.commons.dbcp.PoolingDataSource.getConnection(PoolingDataSource.java:&lt;span class=&quot;number&quot;&gt;106&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    ... &lt;span class=&quot;number&quot;&gt;16&lt;/span&gt; more&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="JVM内存分析" scheme="https://flytreeleft.github.io/categories/JVM%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90/"/>
+    
+    
+      <category term="连接池耗尽" scheme="https://flytreeleft.github.io/tags/%E8%BF%9E%E6%8E%A5%E6%B1%A0%E8%80%97%E5%B0%BD/"/>
+    
+      <category term="Connection pool exhausted" scheme="https://flytreeleft.github.io/tags/Connection-pool-exhausted/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>JVM内存分析：Tomcat内存泄漏</title>
+    <link href="https://flytreeleft.github.io/the-jvm-dump-analyse-for-tomcat-memory-leak/"/>
+    <id>https://flytreeleft.github.io/the-jvm-dump-analyse-for-tomcat-memory-leak/</id>
+    <published>2019-10-04T10:07:06.000Z</published>
+    <updated>2019-10-06T03:35:13.064Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;提要&quot;&gt;&lt;a href=&quot;#提要&quot; class=&quot;headerlink&quot; title=&quot;提要&quot;&gt;&lt;/a&gt;提要&lt;/h2&gt;&lt;p&gt;通过内存转储可对Java应用内各对象的内存使用情况进行分析，从而找出过度消耗内存或无法及时释放的对象，进而为异常修复以及提升应用加载速度和运行性能提供帮助。&lt;/p&gt;
+&lt;p&gt;内存转储使用JDK自带的工具&lt;code&gt;jmap&lt;/code&gt;（&lt;code&gt;sudo -u tomcat jmap -dump:format=b,file=heap-dump.bin &amp;lt;java_pid&amp;gt;&lt;/code&gt;）将应用内存以二进制格式转储到&lt;code&gt;heap-dump.bin&lt;/code&gt;中。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;需确保转储用户与线程用户相同，否则会出现&lt;a href=&quot;https://stackoverflow.com/questions/26140182/running-jmap-getting-unable-to-open-socket-file#answer-35963059&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Unable to open socket file: target process not responding or HotSpot VM not loaded&lt;/a&gt;的问题；&lt;/p&gt;
+&lt;p&gt;转储文件可能会被放到临时目录中，该目录会在Tomcat重启时被删除，所以，一定要在重启前将转储文件转移到安全位置；&lt;/p&gt;
+&lt;p&gt;转储的文件一般为GB级，可通过命令&lt;code&gt;xz -k heap-dump.bin&lt;/code&gt;进行高强度压缩，得到压缩文件&lt;code&gt;heap-dump.bin.xz&lt;/code&gt;。解压使用命令&lt;code&gt;unxz -k heap-dump.bin.xz&lt;/code&gt;，其中，&lt;code&gt;-k&lt;/code&gt;选项均表示保留原文件，否则原文件将会被删除；&lt;br&gt;
+    
+    </summary>
+    
+      <category term="JVM内存分析" scheme="https://flytreeleft.github.io/categories/JVM%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90/"/>
+    
+    
+      <category term="内存泄漏" scheme="https://flytreeleft.github.io/tags/%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/"/>
+    
+  </entry>
+  
+  <entry>
     <title>算法分析：求解最长公共子序列</title>
     <link href="https://flytreeleft.github.io/algorithm-finding-the-longest-common-sequence/"/>
     <id>https://flytreeleft.github.io/algorithm-finding-the-longest-common-sequence/</id>
     <published>2018-10-06T04:35:43.000Z</published>
-    <updated>2019-10-04T04:56:04.212Z</updated>
+    <updated>2019-10-06T03:35:13.064Z</updated>
     
     <summary type="html">
     
@@ -55,7 +134,7 @@
     <link href="https://flytreeleft.github.io/algorithm-calculating-maximum-interval-sum/"/>
     <id>https://flytreeleft.github.io/algorithm-calculating-maximum-interval-sum/</id>
     <published>2018-10-05T03:19:00.000Z</published>
-    <updated>2019-10-04T04:56:04.212Z</updated>
+    <updated>2019-10-06T03:35:13.064Z</updated>
     
     <summary type="html">
     
@@ -89,7 +168,7 @@
     <link href="https://flytreeleft.github.io/algorithm-calculating-fibonacci-numbers/"/>
     <id>https://flytreeleft.github.io/algorithm-calculating-fibonacci-numbers/</id>
     <published>2018-10-04T05:58:17.000Z</published>
-    <updated>2019-10-04T04:56:04.212Z</updated>
+    <updated>2019-10-06T03:35:13.064Z</updated>
     
     <summary type="html">
     
@@ -128,7 +207,7 @@ F(n - 1) + F(n - 2),    &amp; n &gt;= 2
     <link href="https://flytreeleft.github.io/algorithm-using-divide-and-conquer-method-to-find-the-mode-in-a-set/"/>
     <id>https://flytreeleft.github.io/algorithm-using-divide-and-conquer-method-to-find-the-mode-in-a-set/</id>
     <published>2018-09-19T13:38:34.000Z</published>
-    <updated>2019-10-04T04:56:04.212Z</updated>
+    <updated>2019-10-06T03:35:13.064Z</updated>
     
     <summary type="html">
     
@@ -166,7 +245,7 @@ F(n - 1) + F(n - 2),    &amp; n &gt;= 2
     <link href="https://flytreeleft.github.io/a-horrible-os-upgrading-for-centos/"/>
     <id>https://flytreeleft.github.io/a-horrible-os-upgrading-for-centos/</id>
     <published>2018-02-15T01:47:42.000Z</published>
-    <updated>2019-10-04T04:56:04.208Z</updated>
+    <updated>2019-10-06T03:35:13.064Z</updated>
     
     <summary type="html">
     
@@ -191,7 +270,7 @@ F(n - 1) + F(n - 2),    &amp; n &gt;= 2
     <link href="https://flytreeleft.github.io/the-special-case-configuration-of-nginx/"/>
     <id>https://flytreeleft.github.io/the-special-case-configuration-of-nginx/</id>
     <published>2018-02-05T12:30:47.000Z</published>
-    <updated>2019-10-04T04:56:04.212Z</updated>
+    <updated>2019-10-06T03:35:13.064Z</updated>
     
     <summary type="html">
     
@@ -231,7 +310,7 @@ F(n - 1) + F(n - 2),    &amp; n &gt;= 2
     <link href="https://flytreeleft.github.io/the-future-social-formation/"/>
     <id>https://flytreeleft.github.io/the-future-social-formation/</id>
     <published>2017-12-10T05:49:57.000Z</published>
-    <updated>2019-10-04T04:56:04.212Z</updated>
+    <updated>2019-10-06T03:35:13.064Z</updated>
     
     <summary type="html">
     
@@ -268,7 +347,7 @@ F(n - 1) + F(n - 2),    &amp; n &gt;= 2
     <link href="https://flytreeleft.github.io/the-evil-behaviors/"/>
     <id>https://flytreeleft.github.io/the-evil-behaviors/</id>
     <published>2017-12-04T13:50:19.000Z</published>
-    <updated>2019-10-04T04:56:04.212Z</updated>
+    <updated>2019-10-06T03:35:13.064Z</updated>
     
     <summary type="html">
     
@@ -290,7 +369,7 @@ F(n - 1) + F(n - 2),    &amp; n &gt;= 2
     <link href="https://flytreeleft.github.io/the-better-software-development-practice/"/>
     <id>https://flytreeleft.github.io/the-better-software-development-practice/</id>
     <published>2017-12-04T07:32:07.000Z</published>
-    <updated>2019-10-04T04:56:04.212Z</updated>
+    <updated>2019-10-06T03:35:13.064Z</updated>
     
     <summary type="html">
     
@@ -320,7 +399,7 @@ F(n - 1) + F(n - 2),    &amp; n &gt;= 2
     <link href="https://flytreeleft.github.io/the-software-development-criterion/"/>
     <id>https://flytreeleft.github.io/the-software-development-criterion/</id>
     <published>2017-12-04T05:06:31.000Z</published>
-    <updated>2019-10-04T04:56:04.212Z</updated>
+    <updated>2019-10-06T03:35:13.064Z</updated>
     
     <summary type="html">
     
@@ -348,7 +427,7 @@ F(n - 1) + F(n - 2),    &amp; n &gt;= 2
     <link href="https://flytreeleft.github.io/how-to-break-out-of-your-limit/"/>
     <id>https://flytreeleft.github.io/how-to-break-out-of-your-limit/</id>
     <published>2017-12-03T03:13:03.000Z</published>
-    <updated>2019-10-04T04:56:04.212Z</updated>
+    <updated>2019-10-06T03:35:13.064Z</updated>
     
     <summary type="html">
     
@@ -385,7 +464,7 @@ F(n - 1) + F(n - 2),    &amp; n &gt;= 2
     <link href="https://flytreeleft.github.io/git-usage-cases/"/>
     <id>https://flytreeleft.github.io/git-usage-cases/</id>
     <published>2017-05-28T14:24:15.000Z</published>
-    <updated>2019-10-04T04:56:04.212Z</updated>
+    <updated>2019-10-06T03:35:13.064Z</updated>
     
     <summary type="html">
     
@@ -406,7 +485,7 @@ F(n - 1) + F(n - 2),    &amp; n &gt;= 2
     <link href="https://flytreeleft.github.io/hello-world/"/>
     <id>https://flytreeleft.github.io/hello-world/</id>
     <published>2017-05-14T10:44:19.000Z</published>
-    <updated>2019-10-04T04:56:04.212Z</updated>
+    <updated>2019-10-06T03:35:13.064Z</updated>
     
     <summary type="html">
     

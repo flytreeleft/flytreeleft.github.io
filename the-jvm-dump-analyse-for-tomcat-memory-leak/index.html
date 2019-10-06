@@ -1,0 +1,217 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta name="generator" content="Hexo 3.9.0"><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="JVM内存分析：Tomcat内存泄漏"><meta name="keywords" content="内存泄漏"><meta name="author" content="flytreeleft,flytreeleft@126.com"><meta name="copyright" content="flytreeleft"><title>JVM内存分析：Tomcat内存泄漏 | flytreeleft's Blog</title><link rel="shortcut icon" href="/assets/profile/favicon.png"><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.min.css?version=1.3"><script>var GLOBAL = { 
+  root: '/',
+  algolia: undefined,
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  localSearch: {"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}"},"path":"search.xml"}
+} </script></head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar"><div class="toggle-sidebar-info text-center"><span data-toggle="切换文章详情">切换站点概览</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#提要"><span class="toc-number">1.</span> <span class="toc-text">提要</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#案例分析"><span class="toc-number">2.</span> <span class="toc-text">案例分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解决方案"><span class="toc-number">3.</span> <span class="toc-text">解决方案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考"><span class="toc-number">4.</span> <span class="toc-text">参考</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#附录"><span class="toc-number">5.</span> <span class="toc-text">附录</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#异步任务线程"><span class="toc-number">5.1.</span> <span class="toc-text">异步任务线程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#非I-O阻塞型守护线程"><span class="toc-number">5.2.</span> <span class="toc-text">非I/O阻塞型守护线程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#非I-O阻塞型守护线程（数据清理）"><span class="toc-number">5.3.</span> <span class="toc-text">非I/O阻塞型守护线程（数据清理）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#I-O阻塞型守护线程"><span class="toc-number">5.4.</span> <span class="toc-text">I/O阻塞型守护线程</span></a></li></ol></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/assets/profile/avatar.jpg"></div><div class="author-info__name text-center">flytreeleft</div><div class="author-info__description text-center"></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">文章</span><span class="pull-right">16</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">标签</span><span class="pull-right">28</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">分类</span><span class="pull-right">10</span></a></div><hr><div class="author-info-links"><div class="author-info-links__title text-center">Links</div><a class="author-info-links__name text-center" href="https://coolshell.cn/" target="_blank">酷壳</a><a class="author-info-links__name text-center" href="https://www.infoq.com/" target="_blank">InfoQ</a><a class="author-info-links__name text-center" href="http://www.yinwang.org/" target="_blank">当然我在扯淡</a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(/assets/profile/walle-watch-the-stars-sky.jpg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">flytreeleft's Blog</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus"><a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a><a class="site-page" href="/quotes">Quotes</a><a class="site-page" href="/about">About</a></span></div><div id="post-info"><div id="post-title">JVM内存分析：Tomcat内存泄漏</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2019-10-04</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/JVM内存分析/">JVM内存分析</a><div class="post-meta-wordcount"><span>字数总计: </span><span class="word-count">4,605</span><span class="post-meta__separator">|</span><span>阅读时长: 16 分钟</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div id="post-content"><h2 id="提要"><a href="#提要" class="headerlink" title="提要"></a>提要</h2><p>通过内存转储可对Java应用内各对象的内存使用情况进行分析，从而找出过度消耗内存或无法及时释放的对象，进而为异常修复以及提升应用加载速度和运行性能提供帮助。</p>
+<p>内存转储使用JDK自带的工具<code>jmap</code>（<code>sudo -u tomcat jmap -dump:format=b,file=heap-dump.bin &lt;java_pid&gt;</code>）将应用内存以二进制格式转储到<code>heap-dump.bin</code>中。</p>
+<blockquote>
+<p>需确保转储用户与线程用户相同，否则会出现<a href="https://stackoverflow.com/questions/26140182/running-jmap-getting-unable-to-open-socket-file#answer-35963059" target="_blank" rel="noopener">Unable to open socket file: target process not responding or HotSpot VM not loaded</a>的问题；</p>
+<p>转储文件可能会被放到临时目录中，该目录会在Tomcat重启时被删除，所以，一定要在重启前将转储文件转移到安全位置；</p>
+<p>转储的文件一般为GB级，可通过命令<code>xz -k heap-dump.bin</code>进行高强度压缩，得到压缩文件<code>heap-dump.bin.xz</code>。解压使用命令<code>unxz -k heap-dump.bin.xz</code>，其中，<code>-k</code>选项均表示保留原文件，否则原文件将会被删除；<br><a id="more"></a></p>
+</blockquote>
+<p>得到内存转储文件后，可通过<a href="http://www.eclipse.org/mat/downloads.php" target="_blank" rel="noopener">Eclipse Memory Analyzer - MAT</a>对其进行分析。由于转储文件较大，所以，分析工具也需要分配较大内存方可正常运行，需编辑文件<code>MemoryAnalyzer.ini</code>，修改或添加<code>-Xmx4g</code>以增加MAT的堆内存。</p>
+<p>在开始分析之前先了解一下下面几个相关术语：</p>
+<ul>
+<li><strong>Shallow Heap</strong>：对象自身占用的内存大小（包含基本数据类型），不包括它引用对象的大小；</li>
+<li><strong>Retained Heap</strong>：<strong>Shallow Heap</strong> + 所有直接或者间接引用对象占用的内存（即该对象被GC回收后，可以被回收的内存）；</li>
+<li><strong>GC Root</strong>：被堆外对象引用的对象；</li>
+<li><strong>Dominator Tree</strong>：以支配树方式描述的对象引用关系；</li>
+</ul>
+<h2 id="案例分析"><a href="#案例分析" class="headerlink" title="案例分析"></a>案例分析</h2><p>应用运行环境：</p>
+<ul>
+<li>独立的Docker容器</li>
+<li>JDK8 + Tomcat8</li>
+<li>Tomcat内运行有A和B两个业务应用，其他为Tomcat自带的<code>docs</code>、<code>manager</code>、<code>examples</code>、<code>host-manager</code>、<code>ROOT</code>（五个）应用</li>
+</ul>
+<p>在开发环境中，应用经常出现内存泄漏（<code>OutOfMemoryError：Permgem space</code>）。其每次重启并运行一段时间后，也会消耗掉大量内存：</p>
+<p><img src="/assets/images/jvm-dump/tomcat-memory-leak/app-a-hight-cpu-memory-usage.png" alt></p>
+<blockquote>
+<p><strong>内存泄露</strong>：指程序中动态分配内存给一些临时对象，但是对象不会被GC所回收，它始终占用内存。即被分配的对象可达但已无用。</p>
+<p><strong>内存溢出</strong>：指程序运行过程中无法申请到足够的内存而导致的一种错误。内存溢出通常发生于Old段或Perm段垃圾回收后，仍然无内存空间容纳新的Java对象的情况。</p>
+</blockquote>
+<p>从图中可以看到，Tomcat进程占用了接近50%的内存（8G+），这对仅有少量访问的应用来说是很不正常的。</p>
+<p>话不多说，直接使用<code>jmap</code>（<code>sudo -u tomcat jmap -dump:format=b,file=heap-dump.bin &lt;java_pid&gt;</code>）将Tomcat的内存转储并下载到本地。再通过MAT对其进行分析。</p>
+<p>这里得到的分析结果如下：</p>
+<p><img src="/assets/images/jvm-dump/tomcat-memory-leak/java-memory-leak-overview-of-heap-dump.png" alt></p>
+<p>然后，打开<code>Dominator Tree</code>以检查当前占用内存最高的有哪些对象：</p>
+<p><img src="/assets/images/jvm-dump/tomcat-memory-leak/java-memory-leak-dominator-tree-of-heap-dump.png" alt></p>
+<p>从中可发现<code>SessionFactoryImpl</code>和<code>ParallelWebappClassLoader</code>的内存占用比例最高，并且，在对结果进行正则过滤后可以发现：</p>
+<ul>
+<li>这两个Class存在多个实例，其中，<code>SessionFactoryImpl</code>有10个实例，而<code>ParallelWebappClassLoader</code>有15个实例；</li>
+<li>各个<code>SessionFactoryImpl</code>实例的Class以及Class Loader的地址均不相同；</li>
+<li>而所有<code>ParallelWebappClassLoader</code>的Class和Class Loader的地址却是相同的；</li>
+<li>另外，可以看到<code>SessionFactoryImpl</code>的Class Loader均为<code>ParallelWebappClassLoader</code>；</li>
+</ul>
+<blockquote>
+<p>在Tomcat7和Tomcat8中默认的Class Loader为<code>ParallerWebappClassLoader</code>以支持Class并行加载，提高加载效率（并行加载机制需JDK7+环境）。</p>
+</blockquote>
+<p>根据Java Class的加载原理可知，每个Class均对应一个唯一的Class Loader，不同的Class Loader所加载的Class是不同的，即使是Class名称（含包名）完全一致，也是互不相等的。也就是说，在当前的Tomcat内不仅存在多个<code>SessionFactoryImpl</code>实例，还同时存在多个<code>SessionFactoryImpl</code>的Class。</p>
+<p>打开<code>Histogram</code>看看在Tomcat中存在多少个Class，而每个Class又产生了多少实例：</p>
+<p><img src="/assets/images/jvm-dump/tomcat-memory-leak/java-memory-leak-histogram-of-heap-dump.png" alt></p>
+<p>对上述两个目标过滤后可以发现，在Tomcat中确实存在10个同名的<code>SessionFactoryImpl</code>类，每个类均产生了一个实例，而<code>ParallelWebappClassLoader</code>虽然只有一个类，但却创建了15个实例。这和我们所预期的共识产生了明显冲突：</p>
+<ul>
+<li>Tomcat应该为每个应用创建且仅创建一个Class Loader以隔离不同的应用，加上Tomcat自带的应用，总共应该只有7个Class Loader才对；</li>
+<li>Hibernate SessionFactory在单个应用内应该是单例的，而在本案例中只有A和B两个应用才会创建SessionFactory实例，其实例数最多只能有两个；</li>
+</ul>
+<p>于是抛出以下问题：</p>
+<ul>
+<li>Tomcat因为什么原因创建了额外的8个Class Loader？</li>
+<li>额外的8个Hibernate SessionFactory实例又是为何创建的？</li>
+<li>Tomcat高内存占用是因为Class被重复加载以及存在相同的活跃对象所造成的？</li>
+</ul>
+<p>先来看看Class Loader的<code>GC Root</code>引用情况（在<code>Histogram</code>内选中目标，再右键选择<code>Merge Shortest Paths to GC Roots</code>）：</p>
+<p><img src="/assets/images/jvm-dump/tomcat-memory-leak/java-memory-leak-classloader-gc-root-in-heap-dump.png" alt></p>
+<p>从结果中可以看到，Class Loader实际被11条线程所引用，通过名称可以判断有5条是应用所创建的Deamon线程，以及一条Hibernate Search线程和一条Tomcat的线程。</p>
+<p>如此看来，Class Loader是被不同的线程所引用的，那很有可能是因为这些线程遇到死锁或长时间的阻塞而造成了其无法被及时回收，从而导致<code>PermGen</code>（永生代，负责存放Class、静态变量、常量等）内存被耗尽。</p>
+<p>还可以怀疑<code>ASM</code>的动态特性是否会创建新的Class Loader实例。可能性是有的，但仔细分析也可以发现，若其自行实例化加载器，即使不考虑性能问题，其又如何确定从何处加载所需的Class？很明显，利用当前的Class Loader才是明智的选择。看看Tomcat源码<a href="https://github.com/apache/tomcat/blob/8.5.6/java/org/apache/catalina/loader/WebappLoader.java#L393" target="_blank" rel="noopener">WebappLoader.java</a>的第<code>394</code>行就知道自己去实例化Class Loader是多么不可靠：</p>
+<p><img src="/assets/images/jvm-dump/tomcat-memory-leak/tomcat8-creating-classloader-in-webapploader.png" alt></p>
+<p>既然提到了Tomcat的源码，那就干脆把代码check下来研究一下（<a href="https://github.com/apache/tomcat/" target="_blank" rel="noopener">https://github.com/apache/tomcat/</a> ，本例使用分支<code>tag/8.5.6</code>）。</p>
+<p>先看看<a href="https://github.com/apache/tomcat/blob/8.5.6/java/org/apache/catalina/loader/ParallelWebappClassLoader.java#L23" target="_blank" rel="noopener">ParallelWebappClassLoader</a>是怎么回事。</p>
+<p>该类本身逻辑很少，但其继承的父类<a href="https://github.com/apache/tomcat/blob/8.5.6/java/org/apache/catalina/loader/WebappClassLoaderBase.java#L1446" target="_blank" rel="noopener">WebappClassLoaderBase</a>却责任重大，需要做Class的加载和查询工作。该父类包含众多属性，而其中值得关注的是类型为<code>LifecycleState</code>的<code>state</code>属性，显然，这说明这个Class Loader是具有生命周期的，并且，很明显只能由Tomcat来控制其生命周期，因为其他Class无法知道其存在。</p>
+<p>既然，<code>ParallelWebappClassLoader</code>包含这么多属性，那看看在前面发现的那些实例的<code>state</code>属性有何不同。</p>
+<p>依然在<code>Histogram</code>中选中目标，在右键菜单中选择<code>List objects -&gt; with outgoing references</code>，跳转到：</p>
+<p><img src="/assets/images/jvm-dump/tomcat-memory-leak/java-memory-leak-classloader-instances-in-heap-dump.png" alt></p>
+<p>展开每个实例，检查各实例的<code>state</code>情况：</p>
+<p><img src="/assets/images/jvm-dump/tomcat-memory-leak/java-memory-leak-classloader-state-in-heap-dump.png" alt></p>
+<p>检查后发现，有8个实例的<code>state</code>为<code>DESTROYED</code>，7个为<code>STARTED</code>。这说明，有8个Class Loader实际已经被销毁，只有7个是活跃的。再对前面的<code>GC Root</code>列表里的线程所引用的Class Loader进行比对，可以发现有8条线程正好引用的是这8个被销毁的Class Loader，也就是说：</p>
+<ul>
+<li>Tomcat在销毁Class Loader后，因线程无法被终止而使得该线程所引用的Class Loader无法被回收，进而导致该Class Loader所加载的Class也不会被回收，而线程所引用的实例对象也就同样无法被回收，其中，就包含<code>SessionFactoryImpl</code>；</li>
+</ul>
+<p>这里的几个数字也很值得关注：<code>8</code>，<code>7</code>，<code>5</code>。正常情况下，Tomcat应该创建<code>5+2</code>（5个Tomcat自带应用，2个业务应用）个Class Loader，这正好是<code>7</code>个活跃态的Class Loader。那么，现在的这<code>15</code>个Class Loader都对应了哪些应用呢？</p>
+<p>有过以编码方式内嵌<code>Jetty</code>等Servlet容器开发经验或者阅读过Tomcat源码的开发者应该知道，Servlet容器一般会有一个<code>Context</code>对象用以记录加载的webapp的名字、目录等信息，而Tomcat的该类的实现为<a href="https://github.com/apache/tomcat/blob/8.5.6/java/org/apache/catalina/core/StandardContext.java#L159" target="_blank" rel="noopener">org.apache.catalina.core.StandardContext</a>。所以，找到<code>ParallelWebappClassLoader</code>关联的<code>Context</code>，就可以知道其负责加载的是哪个应用了。</p>
+<p>在前面打开的<code>outgoing references</code>列表中查找Tomcat内的对象，最终发现<code>ParallelWebappClassLoader</code>的<code>resources#context</code>正是我们要找的：</p>
+<p><img src="/assets/images/jvm-dump/tomcat-memory-leak/java-memory-leak-classloader-resources-context-in-heap-dump.png" alt></p>
+<p>挨个检查后发现，7个活跃的Class Loader分别对应着Tomcat所加载的7个应用，但剩下的8个却没有<code>resources</code>属性。属性不存在，说明其应该是被置为了<code>null</code>，这也进一步验证Class Loader的确是被销毁了，且只能是被Tomcat销毁的。</p>
+<p>到这里，事情还没有结束，因为还不知道其他8个Class Loader是哪个（或哪些）应用产生的呢！</p>
+<p>试试从加载的jar等资源的路径来判断加载的是哪个应用？</p>
+<p>在查遍可能的属性后，最终发现，在<code>ParallelWebappClassLoader#localRepositories</code>中便记录了所有加载的jar的URL地址：</p>
+<p><img src="/assets/images/jvm-dump/tomcat-memory-leak/java-memory-leak-classloader-localrepositories-in-heap-dump.png" alt></p>
+<p>这下才算是圆满了，被销毁的8个Class Loader均对应到应用A的部署位置，也就是说，Tomcat对应用A进行过至少8次<strong>销毁</strong>处理。</p>
+<p>被销毁8次？！这两者为何如此「苦大仇深」呢？</p>
+<p>前面已经讨论过，销毁必然只能由Tomcat来做，应用内部不应该也没法主动进行销毁，除非有针对性的代码，但应用A中并没有提供这样的机制。</p>
+<p>那继续分析Tomcat的源码。</p>
+<p>在前面有提到<code>ParallelWebappClassLoader#state</code>的值会发生变化，那就找找代码里在哪些地方修改了该状态：</p>
+<p><img src="/assets/images/jvm-dump/tomcat-memory-leak/tomcat8-destroy-classloader-in-webappclassloader.png" alt></p>
+<p>跟踪接口调用情况，可以发现在<code>WebappLoader</code>中实施了销毁动作：</p>
+<p><img src="/assets/images/jvm-dump/tomcat-memory-leak/tomcat8-destroy-classloader-in-webapploader.png" alt></p>
+<p>最后的最后，发现Tomcat会在Class Loader中检查classpath中<strong>已加载</strong>的资源的变更情况，若发生变化，则将直接<strong>reload</strong>当前应用：</p>
+<p><img src="/assets/images/jvm-dump/tomcat-memory-leak/tomcat8-check-modified-in-webappclassloader.png" alt></p>
+<blockquote>
+<p><strong>已加载</strong>指通过<code>ClassLoader#getResourceAsStream</code>或<code>ClassLoader#findResource</code>查找过的资源，在Tomcat中只有通过这两个接口查找到的资源才会被放到<code>org.apache.catalina.loader.WebappClassLoaderBase#resourceEntries</code>列表中。</p>
+</blockquote>
+<p>这里记录下接口调用的跟踪路径：</p>
+<blockquote>
+<p>查找引用：<a href="https://github.com/apache/tomcat/blob/8.5.6/java/org/apache/catalina/loader/WebappClassLoaderBase.java#L1493" target="_blank" rel="noopener">org.apache.catalina.loader.WebappClassLoaderBase#destroy</a></p>
+<blockquote>
+<p>定位到：<a href="https://github.com/apache/tomcat/blob/8.5.6/java/org/apache/catalina/loader/WebappLoader.java#L433" target="_blank" rel="noopener">org.apache.catalina.loader.WebappLoader#stopInternal</a><br>查找引用：<code>org.apache.catalina.loader.WebappLoader</code>（注：查找<code>stopInternal</code>的引用无法确定其真实调用位置）</p>
+<blockquote>
+<p>定位到：<a href="https://github.com/apache/tomcat/blob/8.5.6/java/org/apache/catalina/core/StandardContext.java#L4940" target="_blank" rel="noopener">org.apache.catalina.core.StandardContext#startInternal</a><br>转到：<a href="https://github.com/apache/tomcat/blob/8.5.6/java/org/apache/catalina/core/StandardContext.java#L4977" target="_blank" rel="noopener">org/apache/catalina/core/StandardContext.java:4977</a></p>
+<blockquote>
+<p>查找引用：<a href="https://github.com/apache/tomcat/blob/8.5.6/java/org/apache/catalina/core/StandardContext.java#L1762" target="_blank" rel="noopener">org.apache.catalina.core.StandardContext#getLoader</a></p>
+<blockquote>
+<p>定位到：<a href="https://github.com/apache/tomcat/blob/8.5.6/java/org/apache/catalina/core/ContainerBase.java#L1357" target="_blank" rel="noopener">org.apache.catalina.core.ContainerBase.ContainerBackgroundProcessor#processChildren</a><br>转到：<a href="https://github.com/apache/tomcat/blob/8.5.6/java/org/apache/catalina/core/ContainerBase.java#L1372" target="_blank" rel="noopener">org/apache/catalina/core/ContainerBase.java:1372</a></p>
+<blockquote>
+<p>查找实现：<a href="https://github.com/apache/tomcat/blob/8.5.6/java/org/apache/catalina/core/StandardContext.java#L5537" target="_blank" rel="noopener">org.apache.catalina.core.StandardContext#backgroundProcess</a></p>
+<blockquote>
+<p>转到：<a href="https://github.com/apache/tomcat/blob/8.5.6/java/org/apache/catalina/core/StandardContext.java#L5545" target="_blank" rel="noopener">org/apache/catalina/core/StandardContext.java:5545</a></p>
+<blockquote>
+<p>查找实现：<a href="https://github.com/apache/tomcat/blob/8.5.6/java/org/apache/catalina/loader/WebappLoader.java#L287" target="_blank" rel="noopener">org.apache.catalina.loader.WebappLoader#backgroundProcess</a></p>
+<blockquote>
+<p>转到：<a href="https://github.com/apache/tomcat/blob/8.5.6/java/org/apache/catalina/loader/WebappLoader.java#L292" target="_blank" rel="noopener">org/apache/catalina/loader/WebappLoader.java:292</a></p>
+<blockquote>
+<p>查找实现：<a href="https://github.com/apache/tomcat/blob/8.5.6/java/org/apache/catalina/core/StandardContext.java#L3760" target="_blank" rel="noopener">org.apache.catalina.core.StandardContext#reload</a><br>直接定位到：<a href="https://github.com/apache/tomcat/blob/8.5.6/java/org/apache/catalina/core/StandardContext.java#L5376" target="_blank" rel="noopener">org.apache.catalina.core.StandardContext#stopInternal</a><br>转到：<a href="https://github.com/apache/tomcat/blob/8.5.6/java/org/apache/catalina/core/StandardContext.java#L5447" target="_blank" rel="noopener">org/apache/catalina/core/StandardContext.java:5447</a></p>
+<blockquote>
+<p>返回到：<code>org.apache.catalina.loader.WebappLoader#stopInternal</code></p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<p>分析<a href="https://github.com/apache/tomcat/blob/8.5.6/java/org/apache/catalina/loader/WebappLoader.java#L287" target="_blank" rel="noopener">org.apache.catalina.loader.WebappLoader#backgroundProcess</a>的逻辑可以确定webapp重载的两个条件：</p>
+<ul>
+<li>应用启用了<a href="https://tomcat.apache.org/tomcat-5.5-doc/config/context.html#Common_Attributes" target="_blank" rel="noopener">reloadable</a>；</li>
+<li><code>WEB-INF/classes</code>或<code>WEB-INF/lib</code>内的资源发生了变化；</li>
+</ul>
+<p>经过前面的全面分析，现在终于可以还原真相了：</p>
+<ul>
+<li>应用A在部署时，启用了热加载机制（真实情况也的确如此）：<ul>
+<li>在CI构建中为了控制应用A和应用B的加载顺序，采用了定义<code>&lt;Context/&gt;</code>的方式按顺序加载两个应用；</li>
+<li>不幸的是，从网上拷贝了别人的配置，因而保留了<code>reloadable=&quot;true&quot;</code>的设定：<code>&lt;Context path=&quot;/app_a&quot; reloadable=&quot;true&quot; docBase=&quot;app_a.war&quot; /&gt;</code>；</li>
+</ul>
+</li>
+<li>应用A在首次启动时会修改<code>WEB-INF/classes/config.properties</code>，而该文件会在<code>org.springframework.beans.factory.config.PropertyPlaceholderConfigurer</code>中通过<code>ClassLoader#getResourceAsStream</code>读取，从而被放入Tomcat的资源变更观察列表中，成为Tomcat的<strong>已加载资源</strong>；</li>
+<li>首次启动会使Tomcat触发至少两次重载，从Tomcat的输出日志中可寻找到重载痕迹；</li>
+<li>在应用A运行后，通过其配置中心也会造成对<code>WEB-INF/classes/config.properties</code>的修改，进而导致该应用再次被重载；</li>
+<li>最后，加上应用A中存在无法结束的线程，使得其引用的对象以及关联的Class Loader无法被回收，从而导致内存消耗随着应用重载次数的增加而不断增加；</li>
+</ul>
+<p><img src="/assets/images/jvm-dump/tomcat-memory-leak/tomcat-webapp-reloading-log.png" alt></p>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>对症下药，给出如下解决方案：</p>
+<ul>
+<li>对应用A禁用热加载，因为：<ul>
+<li>应用自身加载就很缓慢，无法做到快速重载；</li>
+<li>对配置的调整是确保应用重启后配置内容不丢失，而不是为了重新加载配置；</li>
+<li>热加载机制应尽量少用，以避免内存泄漏，或其他无法预期的问题；</li>
+</ul>
+</li>
+<li><strong>改进并完善线程逻辑</strong>，避免出现死锁，同时，确保应用在销毁前能够结束全部的线程；</li>
+</ul>
+<p>为了避免因线程无法终止而造成内存泄漏，使用线程需注意以下事项：</p>
+<ul>
+<li>非阻塞型异步任务线程，需确保整个逻辑执行过程中没有阻塞、竞争、死循环等阻碍线程结束的情况出现。除此之外，无须其他处理（<a href="#异步任务线程">#异步任务线程</a>）；</li>
+<li>非I/O阻塞型守护线程，可按如下过程实现或改进代码（<a href="#非I-O阻塞型守护线程">#非I/O阻塞型守护线程</a>）：<ul>
+<li>引入信号变量<code>interrupted</code>，并重写<code>java.lang.Thread#interrupt()</code>接口，在其中将信号量置为<code>true</code>；</li>
+<li>在<code>interrupt()</code>内继续调用<code>super.interrupt();</code>以确保能够打破等待局面（<code>BlockingQueue</code>为空的等待，或者，sleep未超时的等待）；</li>
+<li>循环条件改为<code>!this.interrupted</code>，并在循环内捕获<code>java.lang.InterruptedException</code>，以便在发生中断异常后<code>break</code>循环；</li>
+<li>如果，在中断后仍需处理已有数据，则捕获异常后不<code>break</code>循环，而是在<code>while</code>条件中增加数据队列是否为空的判断（<a href="#非I-O阻塞型守护线程（数据清理）">#非I/O阻塞型守护线程（数据清理）</a>），当然，得<strong>确保生产者已不再工作</strong>；</li>
+</ul>
+</li>
+<li>I/O阻塞型守护线程，同样需重写<code>java.lang.Thread#interrupt()</code>接口，并在其中关闭I/O连接，以迫使守护线程因<code>java.io.IOException</code>而结束等待，并最终终止循环（<a href="#I-O阻塞型守护线程">#I/O阻塞型守护线程</a>）；</li>
+<li>对于在Spring Bean中维护的线程，需实现<code>org.springframework.beans.factory.InitializingBean</code>和<code>org.springframework.beans.factory.DisposableBean</code>两个接口：<ul>
+<li>在<code>InitializingBean#afterPropertiesSet</code>中创建并启动线程；</li>
+<li>在<code>DisposableBean#destroy</code>中结束线程以及其他清理工作；</li>
+</ul>
+</li>
+<li>非Sping应用可考虑通过<code>Runtime.getRuntime().addShutdownHook()</code>注册一个终止其他线程的线程。也可以在应用退出的位置（比如，main结束前，或者在<code>javax.servlet.ServletContextListener#contextDestroyed</code>里）自行终止所有线程；</li>
+<li>结束线程仅可调用接口<code>java.lang.Thread#interrupt()</code>，而<code>java.lang.Thread#stop()</code>已被官方明确不建议使用，原因是，强行终止线程不能确保资源被有效释放，只能自行做释放工作，也就是前面针对阻塞线程提到的几种结束方式；</li>
+</ul>
+<blockquote>
+<p><strong>守护线程</strong>指一直循环运行的线程，一般内部含有<code>while</code>循环；</p>
+<p><code>java.util.concurrent.BlockingQueue#take()</code>和<code>java.lang.Thread#sleep(long)</code>均会阻塞线程，并且只有在等待过程中才能被<code>interrupt</code>并抛出中断异常；</p>
+<p>线程内部在接收到中断消息后，会<strong>重置</strong>线程状态，因此，<code>Thread.currentThread().isInterrupted()</code>仅在<u>中断刚好发生在没有等待（等待刚好被打破或者还在数据处理过程中）</u>的情况下才会返回<code>true</code>，而在发生了中断异常后则为<code>false</code>。所以，该接口十分不可靠，建议不要使用；</p>
+</blockquote>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a href="http://www.eclipse.org/mat/downloads.php" target="_blank" rel="noopener">Eclipse Memory Analyzer - MAT</a></li>
+<li><a href="http://blog.csdn.net/wxwzy738/article/details/8516253" target="_blank" rel="noopener">停止Java线程，小心interrupt()方法</a></li>
+<li><a href="https://10kloc.wordpress.com/2013/03/03/java-multithreading-steeplechase-stopping-threads/" target="_blank" rel="noopener">Java Multithreading Steeplechase: Stopping Threads</a></li>
+<li><a href="https://wiki.apache.org/tomcat/MemoryLeakProtection" target="_blank" rel="noopener">MemoryLeakProtection</a></li>
+<li><a href="https://cdivilly.wordpress.com/2012/04/23/permgen-memory-leak/" target="_blank" rel="noopener">Anatomy of a PermGen Memory Leak</a></li>
+</ul>
+<h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><h3 id="异步任务线程"><a href="#异步任务线程" class="headerlink" title="异步任务线程"></a>异步任务线程</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AsyncTaskThread</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// NOTE：内部逻辑不能存在死锁、死循环、阻塞等代码</span></span><br><span class="line">        doOnceTimeTask();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="非I-O阻塞型守护线程"><a href="#非I-O阻塞型守护线程" class="headerlink" title="非I/O阻塞型守护线程"></a>非I/O阻塞型守护线程</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BlockingDaemonThread</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">boolean</span> interrupted = <span class="keyword">false</span>;</span><br><span class="line">    <span class="keyword">private</span> BlockingQueue queue;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">interrupt</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 标记线程已被中断</span></span><br><span class="line">        <span class="keyword">this</span>.interrupted = <span class="keyword">true</span>;</span><br><span class="line">        <span class="comment">// 继续由父类传递中断消息，以确保处于等待中的队列能够结束等待。</span></span><br><span class="line">        <span class="comment">// 队列为空时将一直等待，从而阻塞线程，只能由父类打破该状态。</span></span><br><span class="line">        <span class="keyword">super</span>.interrupt();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 重置状态，以便复用线程</span></span><br><span class="line">        <span class="keyword">this</span>.interrupted = <span class="keyword">false</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 中断消息可能发生在队列刚好结束等待时，此时，线程无法捕获中断异常，因此，需通过信号量的状态判断是否终止循环。</span></span><br><span class="line">        <span class="comment">// 这里不使用Thread.currentThread().isInterrupted()，因为，这里希望在需要时能够重启该中断线程。</span></span><br><span class="line">        <span class="keyword">while</span> (!<span class="keyword">this</span>.interrupted) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Object data = queue.take();</span><br><span class="line">                processData(data);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                <span class="comment">// 接收到中断消息，结束循环。</span></span><br><span class="line">                <span class="comment">// NOTE：此时，线程的中断状态已被重置！！</span></span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="非I-O阻塞型守护线程（数据清理）"><a href="#非I-O阻塞型守护线程（数据清理）" class="headerlink" title="非I/O阻塞型守护线程（数据清理）"></a>非I/O阻塞型守护线程（数据清理）</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CleanBlockingDaemonThread</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">boolean</span> interrupted;</span><br><span class="line">    <span class="keyword">private</span> BlockingQueue queue;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">interrupt</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 标记线程已被中断</span></span><br><span class="line">        <span class="keyword">this</span>.interrupted = <span class="keyword">true</span>;</span><br><span class="line">        <span class="comment">// 继续由父类传递中断消息，以确保处于等待中的队列能够结束等待。</span></span><br><span class="line">        <span class="comment">// 队列为空时将一直等待，从而阻塞线程，只能由父类打破该状态。</span></span><br><span class="line">        <span class="keyword">super</span>.interrupt();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 重置状态</span></span><br><span class="line">        <span class="keyword">this</span>.interrupted = <span class="keyword">false</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 在接收到中断后，一直处理，直到队列为空。</span></span><br><span class="line">        <span class="comment">// 如果没有中断，那就只能等待新的数据到来，或者，收到父类的中断消息</span></span><br><span class="line">        <span class="keyword">while</span> (!<span class="keyword">this</span>.interrupted || !queue.isEmpty()) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Object data = queue.take();</span><br><span class="line">                processData(data);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                <span class="comment">// NOTE：此时，线程的中断状态已被重置！！</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="I-O阻塞型守护线程"><a href="#I-O阻塞型守护线程" class="headerlink" title="I/O阻塞型守护线程"></a>I/O阻塞型守护线程</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IOBlockingDaemonThread</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">boolean</span> interrupted;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> ServerSocket server;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">interrupt</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.interrupted = <span class="keyword">true</span>;</span><br><span class="line">        <span class="keyword">this</span>.server.close();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.interrupted = <span class="keyword">false</span>;</span><br><span class="line">        <span class="keyword">this</span>.server = <span class="keyword">new</span> ServerSocket(<span class="number">9680</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 由于该线程内没有能接收中断消息的对象，中断异常永远不会发生，只能通过IO关闭异常终止循环。</span></span><br><span class="line">        <span class="comment">// 这里为了确保万无一失，依然使用了中断消息变量。</span></span><br><span class="line">        <span class="keyword">while</span> (!<span class="keyword">this</span>.interrupted) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Socket socket = server.accept();</span><br><span class="line">                processSocket(socket);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                <span class="comment">// 终止循环，退出线程</span></span><br><span class="line">                <span class="comment">// NOTE：这里的线程状态不会变化！！</span></span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:flytreeleft@126.com">flytreeleft</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://flytreeleft.github.io/the-jvm-dump-analyse-for-tomcat-memory-leak/">https://flytreeleft.github.io/the-jvm-dump-analyse-for-tomcat-memory-leak/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">知识共享署名 4.0 国际许可协议</a> 许可协议。转载请注明来自 <a href="https://flytreeleft.github.io" target="_blank">flytreeleft's Blog</a>！</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/内存泄漏/">内存泄漏</a></div><div class="post-qr-code"><div class="post-qr-code-item"><img class="post-qr-code__img" src="/assets/profile/wechatpay.png"><div class="post-qr-code__desc"></div></div><div class="post-qr-code-item"><img class="post-qr-code__img" src="/assets/profile/alipay.png"><div class="post-qr-code__desc"></div></div></div></article><nav id="pagination"><div class="prev-post pull-left"><a href="/the-jvm-dump-analyse-for-connection-pool-exhausted/"><i class="fa fa-chevron-left">  </i><span>数据库连接池耗尽</span></a></div><div class="next-post pull-right"><a href="/algorithm-finding-the-longest-common-sequence/"><span>算法分析：求解最长公共子序列</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer><div class="layout" id="footer"><div class="copyright">&copy;2017 - 2019 By flytreeleft</div><div class="framework-info"><span>驱动 - </span><a href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="/js/third-party/anime.min.js"></script><script src="/js/third-party/jquery.min.js"></script><script src="/js/third-party/jquery.fancybox.min.js"></script><script src="/js/third-party/velocity.min.js"></script><script src="/js/third-party/velocity.ui.min.js"></script><script src="https://cdn.jsdelivr.net/gh/haoel/anti-baidu/js/anti-baidu-latest.min.js"></script><script src="/js/utils.js?version=1.3"></script><script src="/js/fancybox.js?version=1.3"></script><script src="/js/sidebar.js?version=1.3"></script><script src="/js/copy.js?version=1.3"></script><script src="/js/fireworks.js?version=1.3"></script><script src="/js/transition.js?version=1.3"></script><script src="/js/scroll.js?version=1.3"></script><script src="/js/head.js?version=1.3"></script><script type="text/x-mathjax-config">MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+    processEscapes: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+  }
+});
+</script><script type="text/x-mathjax-config">MathJax.Hub.Queue(function() {
+  var all = MathJax.Hub.getAllJax(), i;
+  for (i=0; i < all.length; i += 1) {
+    all[i].SourceElement().parentNode.className += ' has-jax';
+  }
+});
+</script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script></body></html>
