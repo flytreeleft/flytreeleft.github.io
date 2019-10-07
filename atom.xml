@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://flytreeleft.github.io/"/>
-  <updated>2019-10-06T03:35:13.064Z</updated>
+  <updated>2019-10-07T15:49:28.879Z</updated>
   <id>https://flytreeleft.github.io/</id>
   
   <author>
@@ -17,11 +17,37 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>JVM内存分析：线程死锁</title>
+    <link href="https://flytreeleft.github.io/the-jvm-dump-analyse-for-the-thread-dead-lock/"/>
+    <id>https://flytreeleft.github.io/the-jvm-dump-analyse-for-the-thread-dead-lock/</id>
+    <published>2019-10-07T14:50:34.000Z</published>
+    <updated>2019-10-07T15:49:28.879Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;提要&quot;&gt;&lt;a href=&quot;#提要&quot; class=&quot;headerlink&quot; title=&quot;提要&quot;&gt;&lt;/a&gt;提要&lt;/h2&gt;&lt;p&gt;线程转储可用于分析Java应用在某一运行时刻的内部线程的运行情况，包括线程数、线程状态（死锁、运行、等待等），并且可得到线程的执行轨迹，对于分析线程死锁十分有益。&lt;/p&gt;
+&lt;p&gt;通过JDK内置的工具&lt;code&gt;jstack&lt;/code&gt;可转储Java线程：&lt;code&gt;sudo -u tomcat jstack -l &amp;lt;java_pid&amp;gt; &amp;gt; jstack.dump&lt;/code&gt;，注意，&lt;code&gt;&amp;lt;java_pid&amp;gt;&lt;/code&gt;为主进程ID，无法dump某个线程。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;获取Java线程ID：&lt;code&gt;ps aux | grep java&lt;/code&gt;；&lt;br&gt;需确保转储用户与线程用户相同，否则，易出现&lt;a href=&quot;https://stackoverflow.com/questions/26140182/running-jmap-getting-unable-to-open-socket-file#answer-35963059&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Unable to open socket file: target process not responding or HotSpot VM not loaded&lt;/a&gt;的问题；&lt;br&gt;当出现死锁时，dump操作可能失败，可以通过&lt;code&gt;kill -3 &amp;lt;java_pid&amp;gt;&lt;/code&gt;终止死锁（其不会杀死进程或线程！）；&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;得到转储文件后，可将其上传到&lt;a href=&quot;http://fastthread.io/index.jsp&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;fastThread&lt;/a&gt;进行在线分析，该服务可提供直观的分析图表和相关报告。&lt;/p&gt;
+&lt;p&gt;也可以下载IBM提供的工具&lt;a href=&quot;ftp://public.dhe.ibm.com/software/websphere/appserv/support/tools/jca/jca447.jar&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;IBM Thread and Monitor Dump Analyze&lt;/a&gt;，其同样提供图表分析功能，但整体上没有fastThread的直观。其启动命令为：&lt;code&gt;java -jar jca447.jar&lt;/code&gt;。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="JVM内存分析" scheme="https://flytreeleft.github.io/categories/JVM%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90/"/>
+    
+    
+      <category term="线程死锁" scheme="https://flytreeleft.github.io/tags/%E7%BA%BF%E7%A8%8B%E6%AD%BB%E9%94%81/"/>
+    
+  </entry>
+  
+  <entry>
     <title>内存都去哪儿了</title>
     <link href="https://flytreeleft.github.io/the-jvm-dump-analyse-for-where-is-the-memory/"/>
     <id>https://flytreeleft.github.io/the-jvm-dump-analyse-for-where-is-the-memory/</id>
     <published>2019-10-05T13:41:47.000Z</published>
-    <updated>2019-10-06T03:35:13.064Z</updated>
+    <updated>2019-10-07T15:49:28.883Z</updated>
     
     <summary type="html">
     
@@ -52,7 +78,7 @@
     <link href="https://flytreeleft.github.io/the-jvm-dump-analyse-for-connection-pool-exhausted/"/>
     <id>https://flytreeleft.github.io/the-jvm-dump-analyse-for-connection-pool-exhausted/</id>
     <published>2019-10-05T12:40:57.000Z</published>
-    <updated>2019-10-06T03:35:13.064Z</updated>
+    <updated>2019-10-07T15:49:28.879Z</updated>
     
     <summary type="html">
     
@@ -75,7 +101,7 @@
     <link href="https://flytreeleft.github.io/the-jvm-dump-analyse-for-tomcat-memory-leak/"/>
     <id>https://flytreeleft.github.io/the-jvm-dump-analyse-for-tomcat-memory-leak/</id>
     <published>2019-10-04T10:07:06.000Z</published>
-    <updated>2019-10-06T03:35:13.064Z</updated>
+    <updated>2019-10-07T15:49:28.883Z</updated>
     
     <summary type="html">
     
@@ -100,7 +126,7 @@
     <link href="https://flytreeleft.github.io/algorithm-finding-the-longest-common-sequence/"/>
     <id>https://flytreeleft.github.io/algorithm-finding-the-longest-common-sequence/</id>
     <published>2018-10-06T04:35:43.000Z</published>
-    <updated>2019-10-06T03:35:13.064Z</updated>
+    <updated>2019-10-07T15:49:28.879Z</updated>
     
     <summary type="html">
     
@@ -134,7 +160,7 @@
     <link href="https://flytreeleft.github.io/algorithm-calculating-maximum-interval-sum/"/>
     <id>https://flytreeleft.github.io/algorithm-calculating-maximum-interval-sum/</id>
     <published>2018-10-05T03:19:00.000Z</published>
-    <updated>2019-10-06T03:35:13.064Z</updated>
+    <updated>2019-10-07T15:49:28.879Z</updated>
     
     <summary type="html">
     
@@ -168,7 +194,7 @@
     <link href="https://flytreeleft.github.io/algorithm-calculating-fibonacci-numbers/"/>
     <id>https://flytreeleft.github.io/algorithm-calculating-fibonacci-numbers/</id>
     <published>2018-10-04T05:58:17.000Z</published>
-    <updated>2019-10-06T03:35:13.064Z</updated>
+    <updated>2019-10-07T15:49:28.879Z</updated>
     
     <summary type="html">
     
@@ -207,7 +233,7 @@ F(n - 1) + F(n - 2),    &amp; n &gt;= 2
     <link href="https://flytreeleft.github.io/algorithm-using-divide-and-conquer-method-to-find-the-mode-in-a-set/"/>
     <id>https://flytreeleft.github.io/algorithm-using-divide-and-conquer-method-to-find-the-mode-in-a-set/</id>
     <published>2018-09-19T13:38:34.000Z</published>
-    <updated>2019-10-06T03:35:13.064Z</updated>
+    <updated>2019-10-07T15:49:28.879Z</updated>
     
     <summary type="html">
     
@@ -245,7 +271,7 @@ F(n - 1) + F(n - 2),    &amp; n &gt;= 2
     <link href="https://flytreeleft.github.io/a-horrible-os-upgrading-for-centos/"/>
     <id>https://flytreeleft.github.io/a-horrible-os-upgrading-for-centos/</id>
     <published>2018-02-15T01:47:42.000Z</published>
-    <updated>2019-10-06T03:35:13.064Z</updated>
+    <updated>2019-10-07T15:49:28.879Z</updated>
     
     <summary type="html">
     
@@ -270,7 +296,7 @@ F(n - 1) + F(n - 2),    &amp; n &gt;= 2
     <link href="https://flytreeleft.github.io/the-special-case-configuration-of-nginx/"/>
     <id>https://flytreeleft.github.io/the-special-case-configuration-of-nginx/</id>
     <published>2018-02-05T12:30:47.000Z</published>
-    <updated>2019-10-06T03:35:13.064Z</updated>
+    <updated>2019-10-07T15:49:28.883Z</updated>
     
     <summary type="html">
     
@@ -310,7 +336,7 @@ F(n - 1) + F(n - 2),    &amp; n &gt;= 2
     <link href="https://flytreeleft.github.io/the-future-social-formation/"/>
     <id>https://flytreeleft.github.io/the-future-social-formation/</id>
     <published>2017-12-10T05:49:57.000Z</published>
-    <updated>2019-10-06T03:35:13.064Z</updated>
+    <updated>2019-10-07T15:49:28.879Z</updated>
     
     <summary type="html">
     
@@ -347,7 +373,7 @@ F(n - 1) + F(n - 2),    &amp; n &gt;= 2
     <link href="https://flytreeleft.github.io/the-evil-behaviors/"/>
     <id>https://flytreeleft.github.io/the-evil-behaviors/</id>
     <published>2017-12-04T13:50:19.000Z</published>
-    <updated>2019-10-06T03:35:13.064Z</updated>
+    <updated>2019-10-07T15:49:28.879Z</updated>
     
     <summary type="html">
     
@@ -369,7 +395,7 @@ F(n - 1) + F(n - 2),    &amp; n &gt;= 2
     <link href="https://flytreeleft.github.io/the-better-software-development-practice/"/>
     <id>https://flytreeleft.github.io/the-better-software-development-practice/</id>
     <published>2017-12-04T07:32:07.000Z</published>
-    <updated>2019-10-06T03:35:13.064Z</updated>
+    <updated>2019-10-07T15:49:28.879Z</updated>
     
     <summary type="html">
     
@@ -399,7 +425,7 @@ F(n - 1) + F(n - 2),    &amp; n &gt;= 2
     <link href="https://flytreeleft.github.io/the-software-development-criterion/"/>
     <id>https://flytreeleft.github.io/the-software-development-criterion/</id>
     <published>2017-12-04T05:06:31.000Z</published>
-    <updated>2019-10-06T03:35:13.064Z</updated>
+    <updated>2019-10-07T15:49:28.883Z</updated>
     
     <summary type="html">
     
@@ -427,7 +453,7 @@ F(n - 1) + F(n - 2),    &amp; n &gt;= 2
     <link href="https://flytreeleft.github.io/how-to-break-out-of-your-limit/"/>
     <id>https://flytreeleft.github.io/how-to-break-out-of-your-limit/</id>
     <published>2017-12-03T03:13:03.000Z</published>
-    <updated>2019-10-06T03:35:13.064Z</updated>
+    <updated>2019-10-07T15:49:28.879Z</updated>
     
     <summary type="html">
     
@@ -464,7 +490,7 @@ F(n - 1) + F(n - 2),    &amp; n &gt;= 2
     <link href="https://flytreeleft.github.io/git-usage-cases/"/>
     <id>https://flytreeleft.github.io/git-usage-cases/</id>
     <published>2017-05-28T14:24:15.000Z</published>
-    <updated>2019-10-06T03:35:13.064Z</updated>
+    <updated>2019-10-07T15:49:28.879Z</updated>
     
     <summary type="html">
     
@@ -485,7 +511,7 @@ F(n - 1) + F(n - 2),    &amp; n &gt;= 2
     <link href="https://flytreeleft.github.io/hello-world/"/>
     <id>https://flytreeleft.github.io/hello-world/</id>
     <published>2017-05-14T10:44:19.000Z</published>
-    <updated>2019-10-06T03:35:13.064Z</updated>
+    <updated>2019-10-07T15:49:28.879Z</updated>
     
     <summary type="html">
     
