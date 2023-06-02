@@ -1,20 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>flytreeleft&#39;s Blog</title>
-  <icon>https://www.gravatar.com/avatar/e370abb148ebf2097dd1dd8e180e8f56</icon>
+  <icon>https://www.gravatar.com/avatar/a7961defc40be0ce8c4366eb6424b980</icon>
   <subtitle>Keep it simple, stupid!</subtitle>
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://flytreeleft.github.io/"/>
-  <updated>2019-10-07T15:48:46.000Z</updated>
+  <updated>2023-06-02T04:07:43.000Z</updated>
   <id>https://flytreeleft.github.io/</id>
   
   <author>
     <name>flytreeleft</name>
-    <email>flytreeleft@126.com</email>
+    <email>flytreeleft@crazydan.org</email>
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>柏翠面包机 PE6600 图文教程</title>
+    <link href="https://flytreeleft.github.io/the-usage-of-petrvs-pe6600/"/>
+    <id>https://flytreeleft.github.io/the-usage-of-petrvs-pe6600/</id>
+    <published>2023-06-02T03:23:14.000Z</published>
+    <updated>2023-06-02T04:07:43.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;柏翠面包机 PE6600 图文教程及其食谱。&lt;/p&gt;
+&lt;p&gt;食谱和教程应该适用于柏翠面包机系列的机器，其他型号也可以参考本教程。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="家居家电" scheme="https://flytreeleft.github.io/categories/%E5%AE%B6%E5%B1%85%E5%AE%B6%E7%94%B5/"/>
+    
+      <category term="图文教程" scheme="https://flytreeleft.github.io/categories/%E5%AE%B6%E5%B1%85%E5%AE%B6%E7%94%B5/%E5%9B%BE%E6%96%87%E6%95%99%E7%A8%8B/"/>
+    
+    
+      <category term="面包机" scheme="https://flytreeleft.github.io/tags/%E9%9D%A2%E5%8C%85%E6%9C%BA/"/>
+    
+      <category term="柏翠" scheme="https://flytreeleft.github.io/tags/%E6%9F%8F%E7%BF%A0/"/>
+    
+      <category term="柏翠 PE6600" scheme="https://flytreeleft.github.io/tags/%E6%9F%8F%E7%BF%A0-PE6600/"/>
+    
+      <category term="PETRVS PE6600" scheme="https://flytreeleft.github.io/tags/PETRVS-PE6600/"/>
+    
+  </entry>
   
   <entry>
     <title>JVM内存分析：线程死锁</title>
